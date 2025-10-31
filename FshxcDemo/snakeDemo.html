@@ -1,0 +1,3858 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="translated-ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- 以下为禁止微信X5浏览器使用缓存 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!--[if lt IE 9]>
+      <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+      <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- 以上为禁止微信X5浏览器使用缓存 -->
+    <title>室内地图</title>
+    <link rel="shortcut icon" href="css/images/bitbug_favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/border.css">
+    <link rel="stylesheet" href="css/LMap.css">
+    <link rel="stylesheet" href="css/map_style.css">
+    <link rel="stylesheet" href="css/Map_PageSon.css">
+    <link rel="stylesheet" href="css/sweetalert.css" />
+    <link rel="stylesheet" href="css/xy_PositionDemo.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/LMap-integral.css" />
+    <link rel="stylesheet" href="css/childrens.css" />
+    <link rel="stylesheet" href="css/antiepidemic.css" />
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style media="screen">
+        html,
+        body,
+        .sweet-overlay {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+        }
+
+        /* //定位分享 */
+        #mcover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 20000;
+        }
+
+        #mcover .imga {
+            position: fixed;
+            right: 18px;
+            top: 5px;
+            width: 240px;
+            height: 280px;
+            z-index: 999;
+        }
+
+        #mcover .imgb {
+            position: fixed;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            height: 70%;
+            z-index: 999;
+            margin: auto;
+        }
+
+        #mcover p {
+            position: fixed;
+            right: 0;
+            left: 0;
+            text-align: center;
+            font-size: 20px;
+            top: 23%;
+            z-index: 999;
+            color: #ffffff;
+        }
+
+        /* 吃豆寻宝 */
+        .qipao {
+            width: 87px;
+            height: 40px;
+            margin: 20px 0 20px 200px;
+            background: #69A6D1;
+            text-align: center;
+            border-radius: 50%;
+            position: relative;
+            z-index: 999;
+            font-size: 10px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #xbao {
+            display: none;
+        }
+
+        /* 吃豆寻宝 */
+        .demo {
+            width: 36px;
+            height: 19px;
+            background: #69A6D1;
+            transform: rotate(12deg);
+            margin-left: 232px;
+            margin-top: -40px;
+
+        }
+
+        /* 中奖记录查询 */
+        .gameWtl {
+            position: absolute;
+            z-index: 9999;
+            width: 100px;
+            height: 50px;
+            background: brown;
+            color: #fff;
+            font-size: 20px;
+            opacity: .8;
+            text-align: center;
+            line-height: 50px;
+            margin: 10px;
+            right: -4px;
+            display: none;
+        }
+
+        /* 中奖规则提示 */
+        .gameTs {
+            position: absolute;
+            z-index: 9999;
+            background: brown;
+            color: #fff;
+            font-size: 14px;
+            opacity: .8;
+            text-align: center;
+            margin: 10px;
+            left: 0;
+            top: 120px;
+            display: none;
+            padding: 10px 5px;
+        }
+
+        /* 中奖记录查询页面 */
+        .gameHistroy {
+            position: absolute;
+            z-index: 9999999;
+            background: white;
+            width: 100%;
+            height: 100%;
+            display: none;
+            text-align: center;
+        }
+
+        .gameHistroy p {
+            display: block;
+        }
+
+        .divp>p:first-child {
+            font-size: 35px;
+            font-weight: bold;
+            padding: 20px 0;
+        }
+
+        .divp>p:nth-child(2) {
+            font-size: 23px;
+            font-weight: bold;
+            color: red;
+            padding: 20px 0;
+        }
+
+        .divp>img {
+            width: 300px;
+            height: 300px;
+            margin: 73px 0;
+            position: relative;
+            z-index: 99999999;
+
+        }
+
+        .divp div {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            color: gray;
+        }
+
+        .imgbtnHistory {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            left: 10px;
+            top: 10px;
+        }
+
+        /* 中奖页面 */
+        .zj {
+            position: absolute;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            bottom: 51px;
+            display: none;
+            background: rgba(0, 0, 0, .3);
+        }
+
+        .zj>div {
+            /* 解决父元素display flex 出现的宽度问题 */
+            flex: 1;
+        }
+
+        .zj img {
+            display: block;
+            margin: auto;
+        }
+
+        .zj span {
+            display: block;
+        }
+
+        .zj>div img:first-child {
+            width: 300px;
+            height: 300px;
+        }
+
+        .zj>div img:nth-child(3) {
+            width: 200px;
+            height: 200px;
+        }
+
+        .zj span:nth-child(2) {
+            display: block;
+            color: red;
+            font-size: 23px;
+            font-weight: bolder
+        }
+
+        .zj span:nth-child(4) {
+            display: block;
+            margin-top: 15px;
+        }
+
+        .zj .imgbtn {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            left: 20px;
+            top: 20%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <button id="initNaviStartBtn" z-index: 99999; onclick="page.ceshi();">初始化导航起点</button> -->
+    <!-- <button id="" z-index: 99999;>
+      <img id="initimg" style="" src="css/images/edacity.gif" ; alt="" width="40px" height="40px">
+    </button> -->
+    <div class="animationsCss">
+        <div class="animationsCssDiv">
+            安全警报请您立刻撤离该建筑物!
+        </div>
+    </div>
+    <input type="text" name="" value="" id="lnglat" style="position: absolute;z-index: 99999;width: 200px;display:none">
+    <!-- 疫情监控 -->
+    <!-- <div class="antiepidemic">
+        <img id="initimg" style="" src="css/images/antiepidemic.png" ; alt="" width="40px" height="40px">
+    </div> -->
+    <div class="contentantiepidemic">
+        <div class="phoneNub" style="">
+            请输入手机号码
+        </div>
+        <div class="textInput" style="border-bottom:none">
+            <span>手机号：</span>
+            <input type="text" id="phone" name="" value="" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                placeholder="请输入手机号" style="width: 80%;border: none;">
+        </div>
+        <div class="textInput">
+            <span>验证码：</span>
+            <input id="authCode" type="text" name="" value="" placeholder="请输入验证码" style="width: 55%;border: none;">
+            <button id="verification" type="button" class="btn btn-success btn-xs" onclick="checkPhone()">获取验证码</button>
+        </div>
+        <div class="">
+            <button id="login" type="button" class="btn btn-success">登陆</button>
+            <button id="abolish" type="button" class="btn btn-success">取消</button>
+        </div>
+    </div>
+    <!-- 填写姓名 -->
+    <div class="UserNameMobile">
+        <div class="UserNameMobileName">
+            请输入名字
+        </div>
+        <input type="text" name="" value="" id="nameIdTest" class="form-control">
+        <div class="">
+            <button type="button" class="btn btn-primary" id="nameIdButton" name="button">确定</button>
+        </div>
+    </div>
+    <!-- 填写姓名mobile -->
+    <div class="nameMobile">
+
+    </div>
+    <!-- <div class="urgentEvacuationDiv">
+      <button type="button" name="button" class="btn btn-primary" id="urgentEvacuation">开启</button>
+    </div> -->
+    <div id="car_find" align="center">
+        <div style="width:100%;">
+            <ul style="width:90%;height:100%;">
+                <li id="stopCar_btn" class="naviButton">
+                    <img style="margin: 4% 2%" src="css/images/parkingIcon.png" ; alt="" width="20px" height="20px">
+                    <span>停车</span>
+                </li>
+                <li id="findCar_btn" class="naviButton">
+                    <img style="margin: 4% 2%" src="css/images/findCarIcon.png" ; alt="" width="20px" height="20px">
+                    <span>寻车</span>
+                </li>
+            </ul>
+            <img id='clickBtn_car' src="css/images/closeIcon.png" ; alt="" width="20px" height="20px">
+        </div>
+    </div>
+    <!-- </div> -->
+    <!-- 寻车导航 -->
+    <div id="stoCarp">
+        <div id="stoCarpText">
+            停止寻车
+        </div>
+        <span id="stoCarpBtn" class="glyphicon glyphicon-off"></span>
+    </div>
+    <!-- 车牌号查询 -->
+    <div id="findcarIdinput">
+        <span>输入车牌号：</span>
+        <input id="findcarIdinput_text" type="text">
+        <button id="findcarIdinput_btn">查找</button>
+    </div>
+    <!-- 位置共享 -->
+    <div id="shareId">
+        <div class="">
+            <span id="shareIdBtn" class="glyphicon glyphicon-off"></span>
+        </div>
+        <div class="" id="shareIdLIst">
+            <!-- <div class="shareIdStyle">id1</div> -->
+        </div>
+        <div id="mcover">
+            <img class="imga" src="./css/images/fx.png">
+            <p>点击右上角分享位置发送给朋友</p>
+            <img class="imgb" src="./css/images/1.jpg" alt="">
+        </div>
+    </div>
+    <!-- 位置分享 -->
+
+    <!-- </div> -->
+    <!-- 积分 -->
+    <div id="integral">
+
+    </div>
+    <!-- 弹框获取ios权限 -->
+    <!-- <div class="iosJurisdiction">
+      <p class="IOSTest" style="">获取IOS权限</p>
+      <button id="IOSConfirm" style="" type="button" class="btn btn-primary" onclick="requestPermission()">确定</button>
+      <button id="IOSCancel" style="" type="button" class="btn btn-primary" onclick="IOSCancel()">取消</button>
+    </div> -->
+    <!-- 贪吃蛇 -->
+    <!-- <div class="snakeGame" style="position: absolute;z-index: 9999;width: 50px;height: 50px;background: #d8663a;border-radius: 40px;top: 75px;left: 10px;">
+        <img src="css/images/snake.png" alt="" style="width: 45px;margin: 0px 3px;">
+    </div> -->
+    <!-- 结束游戏 -->
+    <div class="gameOver" style="">
+        游戏结束
+    </div>
+    <!-- 游戏积分 -->
+    <div class="gameText" style="">
+        分数：<span id="playGameTest">60</span>
+        <div class="">
+            排名：<span id="playGameRanking">0</span>
+        </div>
+    </div>
+    <div class="gameListAll" style="">
+        <div class="">
+            排名
+        </div>
+        <li>玩家1:第一名</li>
+        <li>玩家2:第二名</li>
+        <li>玩家3:第三名</li>
+    </div>
+        <!-- 吃豆活动中奖记录按钮 -->
+        <div class="gameWtl" style="">
+            寻宝记录
+        </div>
+        <!-- 吃豆规则提示 -->
+        <div class="gameTs" style="">
+            <span>当您的积分达到10分，系统会帮您自动寻宝，(只有一次寻宝机会)</span>
+            <span>如果寻宝成功请在寻宝记录中查询</span>
+        </div>
+        <!-- 吃豆活动中奖记录页面 -->
+        <div class="gameHistroy">
+    
+        </div>
+        <!-- 恭喜中奖页面 -->
+        <div class="zj">
+            <!-- <img class="imgbtnHistory" src="./css/images/closebtn.png" alt="">
+            <div class='divp'>
+                <p>恭喜您中奖啦</p>
+                <p>获得${res.data[0].prizeName}一张!</p>
+                <p style='font-wight:bolder;'>111</p>
+                <img src="./css/images/er.png" alt="">
+                <div>
+                <p>中奖时间：${res.data[0].updateTime}</p>
+                <p>请长按二维码保存或者截图保存</p>
+                <p>请前往客服处兑换</p>
+                <p>活动截止时间至2024年1月3日</p>
+                <p>活动最终解释权归佛山环宇荟所有</p>
+                </div>
+                </div> -->
+        </div>
+    <!-- 儿童监护 -->
+    <div class="">
+        <!-- 添加绑定人员 -->
+        <div class="childrensDiv">
+            <p>请选择要添加的人员</p>
+            <ul>
+                <li style="margin-left: 14%;margin-top: 15px;">
+                    <img id="patriarchimg" src="css/images/myPatriarch.png" alt="" width="90px">
+                    <p>我是家长</p>
+                </li>
+                <li style="margin-left: 26%;margin-top: 15px;">
+                    <img id="childrenImg" src="css/images/myChildren.png" alt="" width="90px">
+                    <p>我是儿童</p>
+                </li>
+            </ul>
+            <div class="childrenline">
+
+            </div>
+        </div>
+        <!-- 绑定手环 -->
+        <div class="messagesTitle">
+            <div class="messagesImgs" id="messagesImgsImg">
+                <img src="css/images/photoBoy.png" alt="" width="90px" style="padding: 10px;">
+                <p>更换图片</p>
+            </div>
+            <div class="messagesImgs1">
+                <p>
+                    <img src="css/images/boundSessage.png" alt="" width="30px">
+                    <span id="boundsText">绑定成功</span>
+                </p>
+                <p style="top:60%">
+                    <button id="continues" style="margin-left: -25%;" type="button"
+                        class="btn btn-primary btn-sm">继续绑定</button>
+                    <button id="achieves" style="width: 70px;margin-left: 20%;" type="button"
+                        class="btn btn-primary btn-sm">完成</button>
+                </p>
+            </div>
+        </div>
+        <!-- 儿童选择图片 -->
+        <div class="imagesIcom">
+            <div class="" style="height: 80%;overflow: auto;">
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon1.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon2.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon3.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon4.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon5.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon6.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon7.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon8.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon9.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon10.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon11.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon12.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon13.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon14.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon15.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon16.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon17.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon18.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon19.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon20.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon21.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon22.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon23.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon24.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon25.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon26.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcom" src="css/images/icon27.png" alt="" width="60px">
+                    </div>
+                    <div class="selectIcom">
+                        <img class="selectIcom" src="css/images/icon2.png" alt="" width="60px">
+                    </div>
+                </div>
+            </div>
+            <div class="profilePhoto">
+                <span>已选头像</span>
+                <img id="profilePhotoIcon" src="css/images/icon2.png" alt="" width="60px">
+            </div>
+            <div class="buttonaeea">
+                <button id="buttonaeeaCancel" type="button" class="btn btn-primary " style="width: 80px">取消</button>
+                <button id="buttonaeeaFinish" type="button" class="btn btn-primary "
+                    style="width: 80px;margin-left:30px">完成</button>
+            </div>
+        </div>
+        <!-- 分享选择图片 -->
+        <div class="imagesIcomShare">
+            <div class="" style="height: 80%;overflow: auto;">
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon1.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon2.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon3.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon4.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon5.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon6.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon7.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon8.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon9.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon10.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon11.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon12.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon13.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon14.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon15.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon16.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon17.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon18.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon19.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon20.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon21.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon22.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon23.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon24.png" alt="" width="60px">
+                    </div>
+                </div>
+                <div class="imagesIcomImg">
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon25.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon26.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon27.png" alt="" width="60px">
+                    </div>
+                    <div class="">
+                        <img class="selectIcomShare" src="css/images/icon2.png" alt="" width="60px">
+                    </div>
+                </div>
+            </div>
+            <div class="profilePhotoShare">
+                <span>已选头像</span>
+                <img id="profilePhotoIconShare" src="css/images/icon2.png" alt="" width="60px">
+            </div>
+            <div class="buttonaeeaShare">
+                <button id="buttonaeeaCancelShare" type="button" class="btn btn-primary "
+                    style="width: 100px">取消</button>
+                <button id="buttonaeeaFinishShare" type="button" class="btn btn-primary "
+                    style="width: 100px;">完成</button>
+            </div>
+        </div>
+        <!-- 解绑手环 -->
+        <div class="relieveMessagesTitle">
+            <div class="messagesImgs">
+                <img src="css/images/icon2.png" alt="" width="90px" style="padding: 10px;">
+                <!-- <p>更换图片</p> -->
+            </div>
+            <div class="messagesImgs1">
+                <p>
+                    <img src="css/images/boundSessage.png" alt="" width="30px">
+                    <span id="relieveBoundsText">归还成功</span>
+                </p>
+                <p style="top:60%">
+                    <button id="relieveContinues" style="margin-left: -25%;" type="button"
+                        class="btn btn-primary btn-sm">继续归还</button>
+                    <button id="relieveAchieves" style="width: 70px;margin-left: 20%;" type="button"
+                        class="btn btn-primary btn-sm">完成</button>
+                </p>
+            </div>
+        </div>
+        <!-- 警告提示 -->
+        <div class="reminder">
+            <img src="css/images/risk.png" alt="" width="75px" style="margin: 4px;padding: 5px;">
+            <div class="reminderTishi">
+                <img id="photoBoyIcon" src="css/images/photoBoy.png" alt="" width="20px">
+                <span id="photoBoyRisk">您的孩子处于危险区域请保证安全</span>
+            </div>
+            <p style="top: 45px;position: absolute;left: 42%;">
+                <button id="IKnowBtns" style="margin-left: -25%;" type="button"
+                    class="btn btn-primary btn-sm">我知道了</button>
+                <button id="openPosition" style="margin-left: 20%;" type="button"
+                    class="btn btn-primary btn-sm">查看位置</button>
+            </p>
+        </div>
+        <!-- 设置或归还 -->
+        <div class="installReturn">
+            <div class="" id="setDistrict">
+                <img src="css/images/area.png" alt="" width="70px">
+                <p>设置区域</p>
+            </div>
+            <div class="" id="boundFacility">
+                <img src="css/images/equipment.png" alt="" width="70px">
+                <p>绑定设备</p>
+            </div>
+            <div class="" id="backBracelet" style="border-right:none">
+                <img src="css/images/bracelet.png" alt="" width="70px">
+                <p>归还手环</p>
+            </div>
+        </div>
+        <!-- 区域设置 -->
+        <div class="areas">
+            <div class="" id="areasSelect">
+                <img src="css/images/preferenceicon.png" alt="" width="40px" style="padding: 10px;">
+                <p>选择区域</p>
+            </div>
+            <div class="" id="areasCancel">
+                <img src="css/images/deselecticon.png" alt="" width="40px" style="padding: 10px;">
+                <p>取消区域</p>
+            </div>
+            <div class="" id="areasSelected">
+                <img src="css/images/selectedicon.png" alt="" width="40px" style="padding: 10px;">
+                <p>查看已选区域</p>
+            </div>
+            <div class="" style="border-right:none" id="areasBack">
+                <img src="css/images/backIcon.png" alt="" width="40px" style="padding: 10px;">
+                <p>返回</p>
+            </div>
+        </div>
+    </div>
+    <div class="alertsAll">
+
+    </div>
+    <!-- 设置或归还 -->
+    <div class="installReturn">
+        <div class="" id="setDistrict">
+            <img src="css/images/area.png" alt="" width="70px">
+            <p>设置区域</p>
+        </div>
+        <div class="" id="boundFacility">
+            <img src="css/images/equipment.png" alt="" width="70px">
+            <p>绑定设备</p>
+        </div>
+        <div class="" id="backBracelet" style="border-right:none">
+            <img src="css/images/bracelet.png" alt="" width="70px">
+            <p>归还手环</p>
+        </div>
+    </div>
+    <!-- 区域设置 -->
+    <div class="areas">
+        <div class="" id="areasSelect">
+            <img src="css/images/preferenceicon.png" alt="" width="40px" style="padding: 10px;">
+            <p>选择区域</p>
+        </div>
+        <div class="" id="areasCancel">
+            <img src="css/images/deselecticon.png" alt="" width="40px" style="padding: 10px;">
+            <p>取消区域</p>
+        </div>
+        <div class="" id="areasSelected">
+            <img src="css/images/selectedicon.png" alt="" width="40px" style="padding: 10px;">
+            <p>查看已选区域</p>
+        </div>
+        <div class="" style="border-right:none" id="areasBack">
+            <img src="css/images/backIcon.png" alt="" width="40px" style="padding: 10px;">
+            <p>返回</p>
+        </div>
+    </div>
+    <!-- 人数显示 -->
+    <div class="peoplesShowDiv">
+        <div class="peoplesShow">
+            <div class="peoplesShow1">
+
+            </div>
+        </div>
+        <div class="peoplesShow2">
+
+        </div>
+    </div>
+
+    </div>
+    </div>
+    <div class="container-fluid">
+        <div id="app"></div>
+        <div id="notification">
+            <div class="MapConterntSon">
+                <div class="MapConterntLeft">
+                    最近通知
+                </div>
+                <span class="MapConterntRight">
+                    <img class="MapConterntRightClose" src="css/images/icon/messageList.png" width="20px" alt="...">
+                </span>
+            </div>
+            <div id="panelCenter" class="panelCenterParert1">
+            </div>
+        </div>
+        <div id="notificationList">
+            <div>
+                <span id="notificationListspan">详情信息</span>
+                <img id="notificationListRemove" src="css/images/icon/closebtn.png" width="20px" alt="...">
+            </div>
+            <div class="bottomGroupon">
+                <div class="topGrouponMessage" style="width:100%">
+                    <div class="LeftListText">
+                        <img class="map_compass1" src="" width="50px" height="50px" alt="...">
+                    </div>
+                    <div class="CenterListText">
+
+                    </div>
+                    <div class="RightListText">
+                        <a class="pToptext" areaId="ZJ01063L8LNd0061" href="javascript:void(0);"></a>
+                        <p class="pbottomtext">限时:<span class="pbottomtextTime"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="bottomGrouponMessage">
+                <ul class="bottomGrouponMessageUl">
+                    <li class="topliImg1"><span class="MessageUlli1"></span></li>
+                    <li class="topliImg3"><span>
+                            <img class="MessageUlli2" src="" width="100%" alt="...">
+                        </span></li>
+                    <li class="topliImg3"><span>
+                            <img class="MessageUlli3" src="" width="100%" alt="...">
+                        </span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="panelCenterParert" id="panelCenterTitle">
+
+        </div>
+    </div>
+    <div id="navigation">
+        <img id="navigationImg1" src="css/images/WechatIMG95.png" alt="" width="50px;" height="50px;">
+        <div id="navigationDiv">
+            <p id="pointRoutePath"></p>
+        </div>
+        <img id="quitNavigation" src="css/images/WechatIMG96.png" alt="" width="50px;" height="50px;">
+    </div>
+    <!-- 儿童监护mobile -->
+    <div class="StraightMoble">
+
+    </div>
+    <!-- 停车寻车mobile -->
+    <div class="carNavMoble">
+
+    </div>
+    <!-- 正常导航 -->
+    <div class="Straight">
+        <span id="StraightClose" class="glyphicon glyphicon-remove-circle">
+        </span>
+        <div class="">
+            <button id="useEscalator" type="button" name="button" class="btn btn-primary" style="margin-top: 7%;">
+                <img src="css/images/escalator.png" alt="" width="25px" height="25px"> 走扶梯
+            </button>
+            <p id="useEscalatorDistance"></p>
+            <button id="useElevator" type="button" name="button" class="btn btn-primary" style="margin-top: 4%;">
+                <img src="css/images/Elevator.png" alt="" width="25px" height="25px"> 坐直梯
+            </button>
+            <p id="useElevatorDistance"></p>
+        </div>
+    </div>
+    <!-- 寻车导航 -->
+    <div class="carNavigation">
+        <span id="carNavigationClose" class="glyphicon glyphicon-remove-circle" style="">
+
+        </span>
+        <div class="">
+            <button id="carNavigationEscalator" type="button" name="button" class="btn btn-primary"
+                style="margin-top: 7%;">
+                <img src="css/images/escalator.png" alt="" width="25px" height="25px"> 走扶梯
+            </button>
+            <p id="parkingUseEscalatorDistance"></p>
+            <button id="carNavigationElevator" type="button" name="button" class="btn btn-primary"
+                style="margin-top: 4%;">
+                <img src="css/images/Elevator.png" alt="" width="25px" height="25px"> 坐直梯
+            </button>
+            <p id="parkingUseElevatorDistance"></p>
+        </div>
+
+    </div>
+    <!-- 位置分享导航 -->
+    <div class="positionNavigation">
+        <span id="positionNavigation" class="glyphicon glyphicon-remove-circle" style="">
+
+        </span>
+        <div class="">
+            <button id="positionNavigationEscalator" type="button" name="button" class="btn btn-primary"
+                style="margin-top: 7%;">
+                <img src="css/images/escalator.png" alt="" width="25px" height="25px"> 走扶梯
+            </button>
+            <p id="positionEscalator"></p>
+            <button id="positionNavigationElevator" type="button" name="button" class="btn btn-primary"
+                style="margin-top: 4%;">
+                <img src="css/images/Elevator.png" alt="" width="25px" height="25px"> 坐直梯
+            </button>
+            <p id="positionElevator"></p>
+        </div>
+
+    </div>
+    <div class="whether">
+        <span id="whetherClose" class="glyphicon glyphicon-remove-circle" style="">
+
+        </span>
+        <div class="">
+            是否重新规划路线
+        </div>
+        <button id="whetherYes" type="button" name="button" class="btn btn-primary">
+            是
+        </button>
+        <button id="whetherNo" type="button" name="button" class="btn btn-primary">
+            否
+        </button>
+    </div>
+    <!-- 吃豆寻宝 -->
+    <div id="xbao" style="position: absolute;bottom: 55px;right: 50px;">
+        <div id="" class="qipao">
+            <div>快去吃豆寻宝吧！</div>
+        </div>
+        <div class="demo"></div>
+    </div>
+    <script src="js/baseParam.js"></script>
+    <script src="js/lmap-src.js"></script>
+    <script src="js/menuList.js"></script>
+    <script src="js/jweixin-1.3.2.js"></script>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/G-Sensor.js"></script>
+    <script src="js/LMap-extend-xxtt.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/LMap-integral.js"></script>
+    <!-- <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <script>
+        // VConsole 默认会挂载到 `window.VConsole` 上
+        var vConsole = new window.VConsole();
+    </script> -->
+    <!-- <script src="js/childrens.js"></script> -->
+    <!-- <script src="js/locationShare.js"></script> -->
+    <!-- <script src="js/snakeGame.js"></script> -->
+    <script>
+        //正常地图模式下的定位marker
+        var markerpanto;
+        //用于测试
+        var testNumber = 0;
+        //判断是否开启平滑效果
+        var isTransition;
+        //保存定位后X
+        var locationX;
+        //保存定位后Y
+        var locationY;
+        //保存定位后F
+        var locationF;
+        // 贪吃蛇
+        var getLocationSnaker = false;
+        //终点AreaId
+        var endAreaId
+        //终点楼层
+        var endAreaFloor
+        //记录起点信息
+        var startPosition;
+        //记录终点信息
+        var endPosition;
+        //用户判断用户是否使用定位跟随
+        var centerMarkerFlag = false;
+        //判断用户是否为第一次定位
+        var firstTimeLocate = true;
+        //cookie声明
+        var cookie;
+        //test
+        var test;
+        //寻车id
+        var finishCarId;
+        //判断用户是否开启导航
+        var naviFlag;
+        //储存中空区域数据
+        var hollowAreaArray = new Array();
+        //导航是否优先选择直梯
+        var naviType;
+        //判断是否需要重新规划路线
+        var needReroute = true;
+        //BJ0114VANK CN110105K9A//万科   GD0605fIWlTx
+        var buildingIdAppId = 'GD0605fIWlTx';
+        // 是否加载childrenjs//儿童监护
+        var peoplesLocationTrue = false;
+        //贪吃蛇
+        var snakeGame = false;
+        //贪吃蛇是否进行中
+        var snakeStartGame = false;
+        // 位置分享
+        var positionShare = false;
+        //判断是否加载位置分享显示在线js
+        var joinGroupNames = false;
+        //储存导航结果
+        var naviResult;
+        // 寻车切换
+        var parkingX, parkingY, parkingF;//车所在位置
+        //测试路径吸附
+        var naviLng;
+        //路径吸附前的lng
+        var realLng
+        //路径吸附后的lat
+        var realLat;
+        // 手机信号弱计数器
+        var signalWeakCounter = 0;
+        //根据buildId获取用户AppId AppSecret
+        var appId;
+        var secret;
+        var userName;
+
+        var markerlatlng;//测试贪吃蛇
+        var arrayListIcon = [];
+        var arraysLatlngs = [];//普通豆
+        var arraysAging = []//时效豆
+        var arraysOrder = []//顺序豆
+        var snakeList = [];//蛇身
+        var snakeSetInterval;//循环游戏是否结束
+        var agingTime;//时效豆刷新
+        var antiepidemic = false;//防疫监控
+        var authCodes = '';
+        var show;//定位分享显示
+        // 电话
+        var phoneId;
+        //是否处于疏散导航状态
+        var phoneModel;
+        var alertStatusNavi = false;
+
+        //以下是判断手机型号
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        //具体型号
+        // var androidName = u.split(';')
+        // var androidNamelist = androidName[2].split('Build')
+        if (isiOS) {
+            phoneModel = 'ios'
+        } else if (isAndroid) {
+            phoneModel = 'android'
+        }
+        //截取地址栏参数
+        if (getQueryString("") != null) {
+            buildingIdAppId = getQueryString("buildingId");
+        }
+        var userPhones = getQueryString("userPhones");
+        console.log("buildingIdAppId:" + buildingIdAppId)
+        $.ajax({
+            url: basePath + "/tokenConfig/getAppIdSercet",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "buildingId": buildingIdAppId
+            }),
+            //同步
+            async: false,
+            success: function (res) {
+                console.log(res)
+                appId = res.data.appId;
+                secret = res.data.secret;
+                userName = res.data.userName;
+            }
+        });
+
+
+        //获取token
+        var token;
+        $.ajax({
+            url: basePath + "/token",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "appId": appId,
+                "secret": secret,
+                //prd 路径
+                "url": "https://www.servera.com.cn"
+                //VS Code 本地路径
+                // "url": "http://127.0.0.1:5500"
+            }),
+            //同步
+            async: false,
+            success: function (res) {
+                token = res.data;
+            }
+        });
+        //动态加载js
+        function loadJs(url, callback) {
+            var script = document.createElement('script');
+            script.type = "text/javascript";
+            if (typeof (callback) != "undefined") {
+                if (script.readyState) {
+                    script.onreadystatechange = function () {
+                        if (script.readyState == "loaded" || script.readyState == "complete") {
+                            script.onreadystatechange = null;
+                            callback();
+                        }
+                    }
+                } else {
+                    script.onload = function () {
+                        callback();
+                    }
+                }
+            }
+            script.src = url;
+            document.body.appendChild(script);
+        }
+        // 提示框
+        function alertsAll(res) {
+            $('.alertsAll').html(res);
+            $('.alertsAll').css('display', 'block')
+            setTimeout(function () {
+                $('.alertsAll').css('display', 'none')
+            }, 3000)
+        }
+        //分享删除
+        $('#mcover').on('click', function () {
+            $(this).css('display', 'none')
+        })
+        var grayscale = LMap.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '<a href="https://openstreetmap.org">OpenStreetMap</a>' });
+
+        //部分安卓型号传入
+        // if (isAndroid) {
+        //     console.log(androidNamelist)
+        // }
+        var map = LMap.map('app', {
+            // buildingId: "BJ0114VANK",
+            // buildingId: "ZJ01063L8LNd",
+            // buildingId: "BJ01131ACRkX",
+            // buildingId: "CN110105K9A",
+            buildingId: buildingIdAppId,
+            //此处缩放级别无用，初始缩放级别在lmap-src.js中设定
+            zoom: 20,
+            isAndroid,
+            isiOS,
+            floor: 1,
+            keyboard: false,
+            Token: token,
+        })
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return decodeURIComponent(r[2]);
+            }
+            return null;
+        }
+        function prepareKeyPointNavi() {
+            map.setZoom(20);
+            setTimeout(showNaviPointLayerAndStartNavi, 500);
+        }
+
+        $(document).ready(function () {
+            if (map.__start != undefined) {
+                map.__start.remove();
+                map.__start = undefined;
+            }
+            if (map.__stop != undefined) {
+                map.__stop.remove();
+                map.__stop = undefined;
+            }
+            if (map._polyline != undefined) {
+                map._polyline.remove()
+                map._polyline = undefined;
+            }
+            document.getElementsByClassName('c-r-routedetail')[0].style.display = "none";
+        })
+
+        $(document).ready(function () {
+            //触摸屏幕滑动
+            function POIgetDirection() {
+                var startx, starty;
+                //获得角度
+                function getAngle(angx, angy) {
+                    return Math.atan2(angy, angx) * 180 / Math.PI;
+                };
+                //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
+                function getDirection(startx, starty, endx, endy) {
+                    var angx = endx - startx;
+                    var angy = endy - starty;
+                    var margintop = $('.typepanel').css('margin-top')
+                    if (parseInt(margintop.split('p')[0]) > 1) {
+                        $('.typepanel').css('margin-top', '5px')
+                    } else {
+                        var topparseInt = parseInt(margintop.split('p')[0]) + parseInt((angy / 12).toFixed(0));
+
+                        $('.typepanel').css('margin-top', topparseInt + 'px')
+                    }
+                    var resultpanels = $('.resultpanel').css('margin-top')
+                    if (resultpanels !== undefined) {
+                        if (parseInt(resultpanels.split('p')[0]) > 0) {
+                            $('.resultpanel').css('margin-top', '1px')
+                        } else {
+                            var topparseIntsval = parseInt(resultpanels.split('p')[0]) + parseInt((angy / 12).toFixed(0));
+
+                            $('.resultpanel').css('margin-top', topparseIntsval + 'px')
+                        }
+                    }
+                    //下
+                    var marginbottom = $('.typepanel').css('margin-top')
+                    if (parseInt(marginbottom) < '-650') {
+                        $('.typepanel').css('margin-top', '-650px')
+                    } else {
+                        var topparseInt = parseInt(marginbottom.split('p')[0]) + parseInt((angy / 12).toFixed(0));
+                        $('.typepanel').css('margin-top', topparseInt + 'px')
+                    }
+                    var resultpanelsval = $('.resultpanel').css('margin-top')
+                    if (resultpanelsval != undefined) {
+                        var topparseInts = parseInt(resultpanelsval.split('p')[0]) + parseInt((angy / 12).toFixed(0));
+                        $('.resultpanel').css('margin-top', topparseInts + 'px')
+                    }
+                    var result = 0;
+
+                    //如果滑动距离太短
+                    if (Math.abs(angx) < 2 && Math.abs(angy) < 2) {
+                        return result;
+                    }
+
+                    var angle = getAngle(angx, angy);
+                    if (angle >= -135 && angle <= -45) {
+                        result = 1;
+                    } else if (angle > 45 && angle < 135) {
+                        result = 2;
+                    } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+                        result = 3;
+                    } else if (angle >= -45 && angle <= 45) {
+                        result = 4;
+                    }
+
+                    return result;
+                }
+                //手指接触屏幕
+                document.getElementsByClassName('c-s-page')[0].addEventListener("touchstart", function (e) {
+                    startx = e.touches[0].pageX;
+                    starty = e.touches[0].pageY;
+                }, false);
+
+                document.getElementsByClassName('c-s-page')[0].addEventListener("touchmove", function (e) {
+                    var endx, endy;
+                    endx = e.changedTouches[0].pageX;
+                    endy = e.changedTouches[0].pageY;
+                    var direction = getDirection(startx, starty, endx, endy);
+                }, false);
+                //手指离开屏幕
+                document.getElementsByClassName('c-s-page')[0].addEventListener("touchend", function (e) {
+                    var endx, endy;
+                    endx = e.changedTouches[0].pageX;
+                    endy = e.changedTouches[0].pageY;
+                    var direction = getDirection(startx, starty, endx, endy);
+                }, false);
+            }
+            //点击搜索框禁止拖动地图
+            $('.c-s-bar').click(function () {
+                map.dragging.disable();//地图禁止拖动
+                map.scrollWheelZoom.disable();//禁止手势放大缩小
+                map.touchZoom.disable();//禁止鼠标放大缩小事件
+                $('.s-cancel').css('display', 'block')//关闭poi显示
+                $('.s-cancelClose').css('display', 'none')//返回poi隐藏
+                document.getElementsByClassName('foot')[0].style.visibility = 'hidden' //用户跟随按钮显示
+
+                POIgetDirection()//触摸屏幕滑动
+            })
+            //取消点击启动地图拖动
+            $('.s-cancel').click(function () {
+                map.dragging.enable();//启用拖动地图事件
+                map.scrollWheelZoom.enable();//启用手势放大缩小
+                map.touchZoom.enable();//启用鼠标放大缩小事件
+                document.getElementsByClassName('foot')[0].style.visibility = 'visible' //用户跟随按钮显示
+            })
+            $('.s-input').click(function () {
+                $('.s-txtinput').focus()
+            })
+            //模拟滑动条上
+            $('#topscroll').click(function () {
+                document.removeEventListener("touchstart", false)
+                var margintop = $('.typepanel').css('margin-top')
+                if (parseInt(margintop.split('p')[0]) > 1) {
+                    $('.typepanel').css('margin-top', '5px')
+                } else {
+                    var topparseInt = parseInt(margintop.split('p')[0]) + 100;
+                    $('.typepanel').css('margin-top', topparseInt + 'px')
+                }
+                var resultpanels = $('.resultpanel').css('margin-top')
+                if (parseInt(resultpanels.split('p')[0]) > 0) {
+                    $('.resultpanel').css('margin-top', '1px')
+                } else {
+                    var topparseIntsval = parseInt(resultpanels.split('p')[0]) + 100;
+                    $('.resultpanel').css('margin-top', topparseIntsval + 'px')
+                }
+            })
+            //模拟滑动条下
+            $('#bottomscroll').click(function () {
+                var margintop = $('.typepanel').css('margin-top')
+                var topparseInt = parseInt(margintop.split('p')[0]) - 100;
+                $('.typepanel').css('margin-top', topparseInt + 'px')
+
+                var resultpanelsval = $('.resultpanel').css('margin-top')
+                var topparseInts = parseInt(resultpanelsval.split('p')[0]) - 100;
+                $('.resultpanel').css('margin-top', topparseInts + 'px')
+
+            })
+            guid();//生成cookie    userid
+            cookie = {
+                set: function (key, val, time) {//设置cookie方法
+                    var date = new Date(); //获取当前时间
+                    var expiresDays = time;  //将date设置为n天以后的时间
+                    date.setTime(date.getTime() + expiresDays * 24 * 3600 * 1000); //格式化为cookie识别的时间
+                    document.cookie = key + "=" + val + ";expires=" + date.toGMTString();  //设置cookie
+                },
+                get: function (key) {//获取cookie方法
+                    /*获取cookie参数*/
+                    var getCookie = document.cookie.replace(/[ ]/g, "");  //获取cookie，并且将获得的cookie格式化，去掉空格字符
+                    var arrCookie = getCookie.split(";")  //将获得的cookie以"分号"为标识 将cookie保存到arrCookie的数组中
+                    var tips;  //声明变量tips
+                    for (var i = 0; i < arrCookie.length; i++) {   //使用for循环查找cookie中的tips变量
+                        var arr = arrCookie[i].split("=");   //将单条cookie用"等号"为标识，将单条cookie保存为arr数组
+                        if (key == arr[0]) {  //匹配变量名称，其中arr[0]是指的cookie名称，如果该条变量为tips则执行判断语句中的赋值操作
+                            tips = arr[1];   //将cookie的值赋给变量tips
+                            break;   //终止for循环遍历
+                        }
+                    }
+                    return tips;
+                },
+                delete: function (key) { //删除cookie方法
+                    var date = new Date(); //获取当前时间
+                    date.setTime(date.getTime() - 10000); //将date设置为过去的时间
+                    document.cookie = key + "=v; expires =" + date.toGMTString();//设置cookie
+                }
+            }
+            if (cookie.get("user") != null) {
+                cookie.set("user", cookie.get("user"), 7);
+            } else {
+                cookie.set("user", guid(), 7);
+            }
+            AddIntegration(userPhones, token)//开始加载积分
+
+            //删除当前marker生成新的位置
+            // LMap.delMarker("PDR"+i);
+            arrayListIcon = [
+                {
+                    beanX: 116.45922213792804,
+                    beanY: 39.80564724221802,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45922750234605,
+                    beanY: 39.805588919598996,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45922616124155,
+                    beanY: 39.80553946687302,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45936831831935,
+                    beanY: 39.80574345913834,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.4594657579437,
+                    beanY: 39.8056125190655,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45927712321284,
+                    beanY: 39.80568742249759,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45914106163674,
+                    beanY: 39.805689102932185,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45933613181117,
+                    beanY: 39.80560500138598,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45951791783547,
+                    beanY: 39.805725035145876,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45938404369873,
+                    beanY: 39.80567432329993,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45940050482753,
+                    beanY: 39.80555657893683,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45949634959834,
+                    beanY: 39.80566439805255,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45922782599884,
+                    beanY: 39.805735063196956,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                }, {
+                    beanX: 116.45931065082551,
+                    beanY: 39.80554627628368,
+                    beanF: 1,
+                    beanImage: '',
+                    beanScore: 1
+                },
+            ]
+        });
+        $(function () {
+            messageList()//推送信息
+            // 点击详情跳转地图商铺
+            $('.pToptext').each(function (e) {
+                $(this).click(function () {
+                    $('#notification').hide()//二级菜单隐藏
+                    $('#notificationList').hide()//三级菜单隐藏
+                    $('.ImgLeftCaption1').attr('src', 'css/images/icon/information.png')
+                    map.poiControl._triggerItem($(this).attr('areaId'))
+                })
+            })
+            $('.antiepidemic').click(function () {
+                $(".contentantiepidemic").css("display", 'block');
+                $(".antiepidemic").css("display", 'none');
+            })
+            //疫情开关
+            // $('#urgentEvacuation').click(function(){
+            //   console.log($(this).html());
+            //   if($(this).html() == '开启'){
+            //     var datas = {
+            //       "buildingId" : buildingIdAppId,
+            //       "alertStatus" : true
+            //     }
+            //     $.ajax({
+            //         type: "post",
+            //         headers: {
+            //             Token: token
+            //         },
+            //         dataType: "json",
+            //         contentType: "application/json",
+            //         url: basePath +"/servermApi/setAlertInfo",
+            //         data:JSON.stringify(datas),
+            //         success: function (res) {
+            //           if(res.code == '10000'){
+            //             $('#urgentEvacuation').html('关闭')
+            //             alertsAll("成功开启疏散");
+            //           }
+            //         }
+            //     })
+            //   }else {
+            //     var datas = {
+            //     "buildingId" : buildingIdAppId,
+            //     "alertStatus" : false
+            //   }
+            //   $.ajax({
+            //       type: "post",
+            //       headers: {
+            //           Token: token
+            //       },
+            //       dataType: "json",
+            //       contentType: "application/json",
+            //       url: basePath +"/servermApi/setAlertInfo",
+            //       data:JSON.stringify(datas),
+            //       success: function (res) {
+            //         console.log(res);
+            //         if(res.code == '10000'){
+            //           $('#urgentEvacuation').html('开启')
+            //           alertsAll("成功关闭疏散");
+            //         }
+            //       }
+            //   })
+            //   }
+            // })
+        })
+
+        // 登陆判断验证码是否正确
+        $('#login').click(function () {
+            phoneId = document.getElementById('phone').value;
+            var datas = {
+                "userId": userPhones,
+                'phoneNum': phoneId,
+                "buildingId": buildingIdAppId,
+            };
+            $.ajax({
+                url: basePath + "/servermApi/getSMsCode",
+                type: "post",
+                headers: {
+                    Token: token
+                },
+                dataType: "json",
+                data: JSON.stringify(datas),
+                contentType: "application/json",
+                //异步
+                // async: false,
+                success: function (res) {
+                    console.log(res);
+                    authCodes = res.data;
+                    $(".contentantiepidemic").css("display", 'none');
+                    $(".antiepidemic").css("display", 'block');
+                    antiepidemic = true;
+                    alertsAll("登陆成功");
+                }
+            });
+            // var password = $('#authCode').val();
+            //   if(password !== ''){
+            //     if(password == authCodes){
+            //       $(".contentantiepidemic").css("display",'none');
+            //       $(".antiepidemic").css("display",'block');
+            //       antiepidemic = true;
+            //       alertsAll("登陆成功");
+            //     }else{
+            //       alertsAll("验证码有误，请重新输入");
+            //     }
+            //   }else{
+            //     alertsAll("验证码不能为空");
+            //   }
+        })
+        // 取消登陆验证
+        $('#abolish').click(function () {
+            $(".contentantiepidemic").css("display", 'none');
+            $(".antiepidemic").css("display", 'block');
+        })
+        // 获取验证码
+        function checkPhone() {
+            phoneId = document.getElementById('phone').value;
+            cookie.set("phoneId", phoneId, 7);
+            if (!(/^1[3456789]\d{9}$/.test(phoneId))) {
+                alertsAll("手机号码有误，请重填");
+                return false;
+            } else {
+                var datas = {
+                    "userId": userPhones,
+                    'phoneNum': phoneId,
+                    "buildingId": buildingIdAppId,
+                };
+                $.ajax({
+                    url: basePath + "/servermApi/getSMsCode",
+                    type: "post",
+                    headers: {
+                        Token: token
+                    },
+                    dataType: "json",
+                    data: JSON.stringify(datas),
+                    contentType: "application/json",
+                    //异步
+                    // async: false,
+                    success: function (res) {
+                        console.log(res);
+                        authCodes = res.data;
+                    }
+                });
+                var i = 60;
+                var circulation = setInterval(function () {
+                    i--;
+                    $("#verification").text("获取验证码" + i);
+                    $("#verification").attr('disabled', true);
+                    if (i == 0) {
+                        clearInterval(circulation);
+                        $("#verification").text("获取验证码");
+                        $("#verification").attr('disabled', false);
+                    }
+                }, 1000)
+            }
+        }
+        //选择楼梯或扶梯弹框
+        function floorsStraight() {
+            //判断终点是否可以通过直梯／扶梯到达，如无法到达，则隐藏按钮
+            var endCount = getElevatorEscalatorCount(endAreaFloor);
+            var userCount = getElevatorEscalatorCount(locationF);
+            if (endCount.elevatorCount <= 0 || userCount.elevatorCount <= 0) {
+                departureNavigation("useEscalator");
+                naviType = "useEscalator";
+                setTimeout(function () {
+                    map.setFloor(locationF);
+                    map.panTo([locationY, locationX]);
+                    centerMarkerOn();
+                }, 1000)
+                return;
+            }
+            if (endCount.escalatorCount <= 0 || userCount.escalatorCount <= 0) {
+                departureNavigation("useElevator");
+                naviType = "useElevator";
+                setTimeout(function () {
+                    map.setFloor(locationF);
+                    map.panTo([locationY, locationX]);
+                    centerMarkerOn();
+                }, 1000)
+                return;
+            }
+
+            map.saveNaviResultForNormalNavi({
+                "endAreaId": endAreaId,
+                "mapF": locationF,
+                "mapX": locationX,
+                "mapY": locationY,
+                "naviType": "both"
+            });
+
+            $('.carNavMoble').css('display', 'block');
+            $('.Straight').css('display', 'block');
+
+            $('#useElevator').click(function () {
+                departureNavigation("useElevator");
+                naviType = "useElevator";
+                $('.carNavMoble').css('display', 'none');
+                $('.Straight').css('display', 'none');
+                setTimeout(function () {
+                    map.setFloor(locationF);
+                    map.panTo([locationY, locationX]);
+                    centerMarkerOn();
+                    //贪吃蛇退出
+                    if (snakeGame) {
+                        overGame();
+                    }
+
+                }, 1000)
+            })
+            $('#useEscalator').click(function () {
+                departureNavigation("useEscalator");
+                naviType = "useEscalator";
+                $('.carNavMoble').css('display', 'none');
+                $('.Straight').css('display', 'none');
+                setTimeout(function () {
+                    map.setFloor(locationF);
+                    map.panTo([locationY, locationX]);
+                    centerMarkerOn();
+                    //贪吃蛇退出
+                    if (snakeGame) {
+                        overGame();
+                    }
+
+                }, 1000)
+            })
+            $('#StraightClose').click(function () {
+                $('.carNavMoble').css('display', 'none');
+                $('.Straight').css('display', 'none');
+
+                //若之前存在导航，则取消
+                naviFlag = false;
+                needReroute = true;
+                if ($(".c-r-routedetail")[0] != undefined) {
+                    $(".c-r-routedetail")[0].style.display = "none";
+                }
+                if ($(".c-s-bar")[0] != undefined) {
+                    $(".c-s-bar")[0].style.display = "block";
+                }
+
+                if (map.__stop) {
+                    map.__stop.remove();
+                    map.__stop = null;
+                }
+                if (map.__start) {
+                    map.__start.remove();
+                    map.__start = null;
+                }
+                if (map._polyline) {
+                    map._polyline.remove();
+                    map._polyline = null;
+                }
+
+            })
+        }
+        // 获取用户当前楼层的直梯／扶梯数量
+        function getElevatorEscalatorCount(floor) {
+            var data = {
+                buildingId: map.options.buildingId,
+                floor: floor
+            };
+            var count;
+            $.ajax({
+                type: 'post',
+                url: basePath + '/servermApi/getElevatorEscalatorCount',
+                contentType: "application/json",
+                dataType: "json",
+                headers: {
+                    Token: token
+                },
+                async: false,
+                data: JSON.stringify(data),
+
+                success: function (data) {
+                    if (data.code == '10000') {
+                        count = {
+                            elevatorCount: JSON.stringify(data.data.elevatorCount),
+                            escalatorCount: JSON.stringify(data.data.escalatorCount)
+                        }
+                    }
+                }
+            });
+            return count;
+        }
+        //随机生产cookie
+        function guid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        //辅助修复拖动时消失BUG
+        function moveEndHelper() {
+            if (centerMarkerFlag) {
+                transitionOff();
+                setTimeout(() => {
+                    map._resetView(map.getCenter(), map.getZoom());
+                    setTimeout(() => {
+                        //刷新地图后重新开启移动渐变效果
+                        transitionOn();
+                    }, 100);
+                }, 100);
+            } else {
+                map._resetView(map.getCenter(), map.getZoom());
+            }
+        }
+
+        //用户跟随开关逻辑
+        function centerMarker() {
+            //先删除遗留的snker()
+            if (locationX == undefined || locationY == undefined || locationF == undefined) {
+                return;
+            }
+
+            if (centerMarkerFlag == true) {
+                centerMarkerFlag = false;
+                $(".ImgLeftCaption3").attr("src", "css/images/icon/location.png");
+                scrollTops()
+            } else if (centerMarkerFlag == false) {
+                centerMarkerFlag = true;
+                if (locationF != map.getFloor()) {
+                    map.setFloor(locationF);
+                }
+                if ($('.lmap-marker-icon-marker-box')[0] != undefined) {
+                    $('.lmap-marker-icon-marker-box')[0].style.display = "block";
+                }
+                map.setZoom(20);//20 目前改变测试贪吃蛇(初始值20 以上就会变大 )
+                map.panTo([locationY, locationX], {
+                    animate: true,
+                });
+                setTimeout(() => {
+                    transitionOn();
+                }, 1000);
+                $(".ImgLeftCaption3").attr("src", "css/images/icon-hover/location.png");
+            }
+            var floorsText;
+            if (locationF > 0) {
+                floorsText = "F" + locationF
+            } else {
+                floorsText = "B" + Math.abs(locationF)
+            }
+            // document.getElementsByClassName('follrTop')[0].innerHTML = floorsText
+        }
+
+        //开启用户跟随
+        function centerMarkerOn() {
+            if (locationX == undefined || locationY == undefined || locationF == undefined) {
+                return;
+            }
+
+            centerMarkerFlag = true;
+            if (locationF != map.getFloor()) {
+                map.setFloor(locationF);
+            }
+            if ($('.lmap-marker-icon-marker-box')[0] != undefined) {
+                $('.lmap-marker-icon-marker-box')[0].style.display = "block";
+            }
+            setTimeout(() => {
+                map.setZoom(20);
+                map.panTo([locationY, locationX], {
+                    animate: false,
+                });
+            }, 1000);
+            $(".ImgLeftCaption3").attr("src", "css/images/icon-hover/location.png");
+
+            var floorsText;
+            if (locationF > 0) {
+                floorsText = "F" + locationF
+            } else {
+                floorsText = "B" + Math.abs(locationF)
+            }
+            // document.getElementsByClassName('follrTop')[0].innerHTML = floorsText
+        }
+
+        //关闭平滑移动
+        function transitionOff() {
+            $(".lmap-marker-icon-marker-box").css("transition", "");
+            $(".transformMarker").css("transition", "");
+            isTransition = false;
+            // console.log("transition off");
+        }
+
+        //开启平滑移动
+        function transitionOn() {
+            $(".lmap-marker-icon-marker-box").css("transition", "transform 1s linear 0s");
+            $(".transformMarker").css("transition", "transform 1s linear 0s");
+            isTransition = true;
+            // console.log("transition on");
+        }
+
+        function centerMarkerOff() {
+            // alert(locationF)
+            if (centerMarkerFlag == false) {
+                return;
+            }
+            if (locationF != map.getFloor() && $('.lmap-marker-icon-marker-box')[0] != undefined) {
+                $('.lmap-marker-icon-marker-box')[0].style.display = "none";
+            }
+            centerMarkerFlag = false;
+            $(".ImgLeftCaption3").attr("src", "css/images/icon/location.png");
+        }
+
+        function clickNaviButton(areaId) {
+            naviFlag = true;
+            needReroute = true;
+            endAreaId = areaId;
+            endAreaFloor = map.getAreaNameAndFloorByAreaId(areaId).areaFloor;
+            if (locationX == undefined || locationY == undefined || locationF == undefined || areaId == undefined || endAreaFloor == undefined) {
+                swal("未获取到您的位置，暂无法为您导航 \n 请您开启定位与蓝牙服务");
+                return;
+            }
+
+            if (locationF == endAreaFloor) {
+                transitionOn();
+                naviType = "sameFloor";
+                departureNavigation("sameFloor");
+                setTimeout(function () {
+                    map.setFloor(locationF);
+                    map.panTo([locationY, locationX]);
+                    centerMarkerOn();
+                }, 1000)
+            } else {
+                transitionOn();
+                floorsStraight();
+            }
+        }
+        //未读红色按钮
+        function mapReadNew() {
+            var datas = {
+                // "userId": cookie.get("user"),
+                "userId": userPhones,
+            }
+            $.ajax({
+                type: 'post',
+                url: basePath + '/servermApi/messageUnread',
+                contentType: "application/json",
+                dataType: "json",
+                headers: {
+                    Token: token
+                },
+                data: JSON.stringify(datas)
+                ,
+                async: true,
+
+                success: function (dataTitle) {
+                    if (dataTitle.data == 0 || dataTitle.data == '') {
+                        $('#badge').hide();
+                        $('#badge').html('');
+                    } else {
+                        $('#badge').show();
+                        $('#badge').html(dataTitle.data);
+                    }
+                },
+                error: function (dataTitle) {
+                }
+            });
+        }
+        //推送信息
+        function messageList() {
+            $('#panelCenter').html('');
+            var datas = {
+                // 'userId': cookie.get("user"),//"wdows1234529"
+                "userId": userPhones,
+            }
+            $.ajax({
+                type: 'post',
+                url: basePath + '/servermApi/getMessageList',
+                contentType: "application/json",
+                dataType: "json",
+                headers: {
+                    Token: token
+                },
+                async: true,
+                data: JSON.stringify(datas)
+                ,
+                success: function (data) {
+                    if (data.data == '') {
+                        $('#panelCenter').html('暂无数据');
+                        return false
+                    }
+                    var list_colseAll = [];
+                    for (var i = 0; i < data.data.length; i++) {
+                        var Map_data = data.data[i];
+                        var messages;
+                        var classMessages;
+                        if (Map_data.messageStatus == '00001') {
+                            messages = '';
+                            classMessages = 'margin-left:5px;color:#49b14c';
+                        } else {
+                            messages = '（新消息）';
+                            classMessages = 'margin-left:5px;color:#49b14c';
+                        }
+                        list_colseAll.push(Map_data.id);
+                        $('#panelCenter').append('<div class="panelCenter panel panel-default">' +
+                            '<div class="panel-body">' +
+                            '<img class="panel-body-img" src=' + Map_data.imgUrl1 + ' width="40px" height="40px" alt="...">' +
+                            '<div class="panel-body-div">' +
+                            '<span>' + Map_data.storeName + '</span>' +
+                            '</div>' +
+                            '<div class="panel-body-divNext">' +
+                            // '<span>' + '现在' + '</span>' +
+                            '<span style=' + classMessages + ' class=' + classMessages + '>' + messages + '</span>' +
+                            '</div>' +
+                            '<div class="panel-body-divNextTimes">' +
+                            '<img class="openClick" src="css/images/icon/closebtn.png" width="70%"  alt="...">' +
+                            '</div>' +
+                            '</div>' +
+                            '<p class="particularsHover" >' +
+                            '<div id="' + Map_data.id + '" class="panel-footer panelFooterloca">' +
+                            '<div class="panel-footerH4">' +
+                            '<h4>' + Map_data.messageTitle + '</h4>' +
+                            '<div class="panel-footerDiv">' +
+                            '<span>' + '活动时间：' + Map_data.beginDate + '——' + Map_data.endDate + '</span>' +
+                            '</div>' +
+                            '<div class="panel-footerDivNext">' +
+                            '<span>点击查看更多</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</p>' +
+                            '</div>')
+                    }
+                    $(".openClick").each(function () {
+                        var mapthis = $(this);
+                        mapthis.click(function () {
+                            swal({
+                                title: "",
+                                text: "您确定要删除这条数据？",
+                                type: "warning",
+                                showCancelButton: true,
+                                closeOnConfirm: true,
+                                confirmButtonText: "删除",
+                                confirmButtonColor: "#0099e8"
+                            }, function () {
+                                mapthis.parent().parent().parent().hide();
+                                var messageIdList = mapthis.parent().parent().next().next().attr('id');
+                                removListMessage(messageIdList, userPhones, '00002')
+                            });
+                        });
+                    });
+                    // 点击未读信息跳转出三级页面
+                    var messageIds = '';
+                    $(".panelFooterloca").each(function () {
+                        $(this).click(function () {
+                            messageIds = $(this).attr('id');
+                            $(this).parent().hide()
+                            var datas = {
+                                messageId: messageIds,
+                                // userId: cookie.get("user"),
+                                "userId": userPhones,
+                                mapX: '42.787363',
+                                mapY: '126.73733',
+                                mapF: '2'
+                            }
+                            $.ajax({
+                                type: 'post',
+                                url: basePath + '/servermApi/getMessageByMessageId',
+                                contentType: "application/json",
+                                dataType: "json",
+                                headers: {
+                                    Token: token
+                                },
+                                async: true,
+                                data: JSON.stringify(datas),
+                                success: function (res) {
+                                    if (res.code == '10000') {
+                                        removListMessage(messageIds, userPhones, null)
+                                        $('#notification').hide()//二级菜单显示
+                                        $('#notificationList').show()//三级菜单隐藏
+                                        $('.map_compass1').attr('src', res.data.imgUrl1);
+                                        $('.pToptext').html(res.data.messageTitle);
+                                        $('.pToptext').attr('areaId', res.data.areaId);
+                                        $('.pbottomtextTime').html(res.data.beginDate + '——' + res.data.endDate);
+                                        $('.MessageUlli1').html(res.data.messageContent);
+                                        $('.MessageUlli2').attr('src', res.data.imgUrl2);
+                                        $('.MessageUlli3').attr('src', res.data.imgUrl3);
+                                    }
+                                },
+                                error: function (res) {
+                                    console.log(res)
+                                }
+                            });
+                        });
+                    });
+                    // })
+                },
+                error: function (data) {
+                    //console.log(data)
+                }
+            });
+        }
+        $('.MapConterntRightClose').click(function () {
+            $('#notification').hide()//二级菜单显示
+            $('#notificationList').hide()//三级菜单隐藏
+            $('.ImgLeftCaption1').attr('src', 'css/images/icon/information.png')
+        })
+        // 未读信息跳转页面切换
+        $('#tab-msg').click(function () {
+            // var badge = $('#badge').html();
+            var ImgLeftCapt = $('.ImgLeftCaption1').attr('src');
+            if (ImgLeftCapt == 'css/images/icon/information.png') {
+                messageList()//信息列表
+                $('#notification').show()//二级菜单显示
+                $('#notificationList').hide()//三级菜单隐藏
+                $('.ImgLeftCaption1').attr('src', 'css/images/icon-hover/information-hover.png')
+            } else {
+                $('#notification').hide()//二级菜单显示
+                $('#notificationList').hide()//三级菜单隐藏
+                $('.ImgLeftCaption1').attr('src', 'css/images/icon/information.png')
+            }
+        })
+        // 楼层切换
+        $('#tab-floor').click(function () {
+
+            // 未读信息隐藏
+            var ImgLeftCapt = $('.tab-floorImg').attr('src');
+            if (ImgLeftCapt == 'css/images/icon-hover/floor-hoveicon.png') {
+                $('.tab-floorImg').attr('src', 'css/images/icon/floor-icon.png')
+                $('.follrTop').css('color', '#0098e1')
+                document.getElementsByClassName('lmap-bar')[0].style.display = 'none'//放大缩小控制条显示
+                document.getElementsByClassName('lmap-bar')[1].style.display = 'none'//楼层控制条显示
+            } else {
+                $('.tab-floorImg').attr('src', 'css/images/icon-hover/floor-hoveicon.png')
+                $('.follrTop').css('color', '#fff')
+                document.getElementsByClassName('lmap-bar')[0].style.display = 'block'//放大缩小控制条显示
+                document.getElementsByClassName('lmap-bar')[1].style.display = 'block'//楼层控制条显示
+            }
+            $('#notification').hide()//二级菜单显示
+            $('#notificationList').hide()//三级菜单隐藏
+            $('.ImgLeftCaption1').attr('src', 'css/images/icon/information.png')
+        })
+        $('.follrTop').html('F1')
+        // 定位切换
+        $('#tab-follow').click(function () {
+            centerMarker()
+            if (snakeGame) {
+                overGame()
+            }
+            // 未读信息隐藏
+            $('#notification').hide()//二级菜单显示
+            $('#notificationList').hide()//三级菜单隐藏
+            $('.ImgLeftCaption1').attr('src', 'css/images/icon/information.png')
+
+        })
+        // 详细推送信息已查看　
+        function removListMessage(data1, data2, data3) {
+            var datas = {
+                "messageId": data1,//list_colseAll.join(','),
+                'userId': data2,
+                'visibleStatus': data3
+            }
+            $.ajax({
+                type: 'post',
+                url: basePath + '/servermApi/updateStatus',
+                contentType: "application/json",
+                dataType: "json",
+                headers: {
+                    Token: token
+                },
+                async: true,
+                data: JSON.stringify(datas)
+                ,
+                success: function (data) {
+                    // console.log(data)
+                },
+                error: function (data) {
+                    // console.log(data)
+                }
+            });
+        }
+        //关闭详情列表
+        $('#notificationListRemove').click(function () {
+            messageList()//信息列表
+            $('#notificationList').hide()//三级菜单隐藏
+            $('#notification').show()//二级菜单显示
+            $('.ImgLeftCaption1').attr('src', 'css/images/icon-hover/information-hover.png')
+        })
+        //提示卡弹出信息
+        function mapPopUpBox(res) {
+            var arr = []
+            for (var i = 0; i < res.length; i++) {
+                if (res[i].rssi != '0' || res[i].rssi != 0) {
+                    arr.push(res[i].rssi)
+                }
+            }
+            arr.sort(function (a, b) {
+                return b - a;
+            });
+            var userIds;
+            var uuids;
+            var majors;
+            var minors;
+            for (var i = 0; i < res.length; i++) {
+                if (res[i].rssi == arr[0]) {
+                    uuids = res[i].uuid;
+                    majors = res[i].major;
+                    minors = res[i].minor;
+                }
+            }
+            var datas = {
+                // userId: cookie.get("user"),
+                "userId": userPhones,
+                pushUuid: uuids,
+                pushMajor: majors,
+                pushMinor: minors,
+                buildingId: map.options.buildingId
+            };
+            if ($('#panelCenterTitle').is(':hidden')) {
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: basePath + '/servermApi/push',
+                    contentType: "application/json",
+                    headers: {
+                        Token: token
+                    },
+                    async: true,
+                    data: JSON.stringify(datas)
+                    ,
+                    success: function (data) {
+                        if (data.code == '10000') {
+                            $('#panelCenterTitle').hide()
+                            messageList()//推送信息
+                            $('#panelCenterTitle').fadeIn(1000);
+                            $('#panelCenterTitle').html('<div class="panelCenter panel panel-default">' +
+                                '<div class="panel-body">' +
+                                '<img class="panel-body-img" src=' + data.data.imgUrl1 + ' width="40px" height="40px" alt="...">' +
+                                '<div class="panel-body-div">' +
+                                '<span>' + data.data.storeName + '</span>' +
+                                '</div>' +
+                                '<div class="panel-body-divNext">' +
+                                '<span style="color:#49b14c">' + '（新消息）' + '</span>' +
+                                '</div>' +
+                                '<div class="panel-body-divNextTimes">' +
+                                '<img id="closePageTitle" class="openClick1" src="css/images/icon/closebtn.png" width="70%"  alt="...">' +
+                                '</div>' +
+                                '</div>' +
+                                '<div id=' + data.data.id + ' class="panel-footer panelFooterlocaList">' +
+                                '<div class="panel-footerH4">' +
+                                '<h4>' + data.data.messageTitle + '</h4>' +
+                                '<div class="panel-footerDiv">' +
+                                '<span>' + '活动时间：' + data.data.beginDate + '——' + data.data.endDate + '</span>' +
+                                '</div>' +
+                                '<div class="panel-footerDivNext">' +
+                                '<span>点击查看更多</span>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>')
+                            $('#panelCenterTitle').fadeOut(4000)
+                            $('#closePageTitle').click(function () {
+                                $('#panelCenterTitle').fadeOut(1000);
+                            })
+                            $('.panelFooterlocaList').click(function () {
+                                var messageIds = $(this).attr('id');
+                                $('.ImgLeftCaption1').attr('src', 'css/images/icon-hover/information-hover.png')
+                                var datas = {
+                                    messageId: messageIds,
+                                    // userId: cookie.get("user"),
+                                    "userId": userPhones,
+                                    mapX: '42.787363',
+                                    mapY: '126.73733',
+                                    mapF: '2'
+                                }
+                                $.ajax({
+                                    type: 'post',
+                                    url: basePath + '/servermApi/getMessageByMessageId',
+                                    contentType: "application/json",
+                                    dataType: "json",
+                                    headers: {
+                                        Token: token
+                                    },
+                                    async: true,
+                                    data: JSON.stringify(datas),
+                                    success: function (res) {
+                                        if (res.code == '10000') {
+                                            // removListMessage(messageIds, cookie.get("user"), null)
+                                            removListMessage(messageIds, userPhones, null)
+                                            $('#notification').hide()//二级菜单显示
+                                            $('#notificationList').show()//三级菜单隐藏
+                                            $('.map_compass1').attr('src', res.data.imgUrl1);
+                                            $('.pToptext').html(res.data.messageTitle);
+                                            $('.pToptext').attr('areaId', res.data.areaId);
+                                            $('.pbottomtextTime').html(res.data.beginDate + '——' + res.data.endDate);
+                                            $('.MessageUlli1').html(res.data.messageContent);
+                                            $('.MessageUlli2').attr('src', res.data.imgUrl2);
+                                            $('.MessageUlli3').attr('src', res.data.imgUrl3);
+                                        }
+                                    },
+                                    error: function (res) {
+                                        console.log(res)
+                                    }
+                                });
+                            });
+                        }
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+        }
+
+        //用于传统导航时起点，终点与路线的重新绘制
+        function renewPolyLine() {
+            if (!(map.__start || map.__stop || map._polyline)) {
+                console.log("return renewPolyLine() " + map.__start + "  " + map.__stop + "  " + map._polyline)
+                return;
+            }
+            if (map.getFloor() != map.__start.__floor) {
+                map.__start.remove();
+            } else {
+                map.__start.addTo(map);
+            }
+            if (map.getFloor() != map.__stop.__floor) {
+                map.__stop.remove();
+            } else {
+                map.__stop.addTo(map);
+            }
+            var latlngs;
+            var paths = map.options.paths;
+            for (var a = 0; a < paths.length; a++) {
+                if (paths[a].floor == map.getFloor()) {
+                    latlngs = paths[a].path;
+                }
+
+            }
+            map._polyline.remove();
+            if (latlngs == undefined) {
+                return;
+            }
+            if (map._polyline.__floor.indexOf(map.getFloor()) != -1) {
+                map._polyline.setLatLngs(latlngs);
+                map._polyline.addTo(map);
+            } else {
+                console.log("draw path error")
+            }
+        }
+
+        //当用户不开启跟随且将地图切换至用户所在楼层时，显示定位marker(在源码里操作切换楼层控件时触发)
+        function changeFloorMarker() {
+
+
+            if (locationF == map.getFloor() && $('.lmap-marker-icon-marker-box')[0] != undefined) {
+                // 首先判断是否在游戏中所展示的图片不同  snakeStartGame==true不是
+                if (!snakeStartGame) {
+                    $('.lmap-marker-icon-marker-box').html('<img class="main-marker-arrow" width="20px" height="30px" src="css/images/locating.png"/>');
+                    $('.lmap-marker-icon-marker-box')[0].style.display = "block";
+                    $('.main-marker-arrow').css('width', '20px')
+                    $('.main-marker-arrow').css('height', '30px')
+                } else {
+                    $('.lmap-marker-icon-marker-box').html('<img class="main-marker-arrow" width="20px" height="30px" src="css/images/edacity.gif"/>');
+                    $('.lmap-marker-icon-marker-box')[0].style.display = "block";
+                    $('.main-marker-arrow').css('width', '45px')
+                    $('.main-marker-arrow').css('height', '45px')
+                }
+            }
+        }
+
+        function departureNavigation(naviType) {
+            transitionOn();
+            if (locationX == undefined || locationY == undefined || locationF == undefined) {
+                swal("未获取到您的位置，暂无法为您导航 \n 请您开启定位与蓝牙服务");
+                // alert("未获取到您的位置，暂无法为您导航 \n 请您开启定位与蓝牙服务");
+                return;
+            }
+            naviFlag = true;
+            map.options.iNavi = true;
+            var that = this;
+            //正常导航
+            if (alertStatusNavi == false) {
+                map.routePath({
+                    start: {
+                        mapX: locationX,
+                        mapY: locationY,
+                        mapF: locationF,
+                    },
+                    stop: {
+                        endAreaId: endAreaId
+                    },
+                    naviType: naviType,
+                })
+                //疏散导航
+            } else {
+                map.routePath({
+                    start: {
+                        mapX: locationX,
+                        mapY: locationY,
+                        mapF: locationF,
+                    },
+                    stop: {
+                        mapX: "",//116.45870715379716,
+                        mapY: "",//39.805463855002884,
+                        mapF: ""//2
+                    },
+                    naviType: naviType,
+                    evacuation: true,
+                })
+            }
+
+
+        }
+
+        //计算多边形外一点在多边形上的最近投影点，用于定位在中空区域时的偏移算法
+        function closestPointOnPolyline(point, polyline) {
+            var minDistance = Infinity,
+                minPoint = null,
+                p1,
+                p2;
+
+            for (var i = 1, len = polyline.length; i < len; i++) {
+                p1 = map.project(polyline[i - 1], 16);
+                p2 = map.project(polyline[i], 16);
+
+                var sqDist = LMap.LineUtil.pointToSegmentDistance(point, p1, p2);
+
+                if (sqDist < minDistance) {
+                    minDistance = sqDist;
+                    minPoint = LMap.LineUtil.closestPointOnSegment(point, p1, p2);
+                }
+                minPoint.distance = minDistance;
+            }
+            return minPoint;
+        }
+
+        // 剧中楼层
+        function scrollTops() {
+            panel = document.getElementsByClassName("control-floor-warp")[0];
+            div3 = document.getElementsByClassName("lmap-disabled")[0];
+            panel.scrollTop = div3.offsetTop - 90;
+        }
+        //实例地图
+        function Page() { }
+        //分享
+        // function onshare() {
+        //         var _this = this;
+        //         console.log(window.location.href)
+        //         $.ajax({
+        //             type: "post",
+        //             headers: {
+        //                 Token: token
+        //             },
+        //             url: basePath + "/servermApi/getWxConfig",
+        //             data: {
+        //                 baseUrl: window.location.href
+        //             },
+        //             success: res => {
+        //                 console.log(res)
+        //                 var ticket = res.ticket;
+        //                 wx.config({
+        //                     debug: false,
+        //                     appId: res.appId,
+        //                     timestamp: res.timestamp,
+        //                     nonceStr: res.nonceStr,
+        //                     signature: res.signature,
+        //                     jsApiList: [
+        //                         "checkJsApi",
+        //                         "getNetworkType",
+        //                         "startSearchBeacons",
+        //                         "stopSearchBeacons",
+        //                         "onSearchBeacons",
+        //                         "onMenuShareAppMessage",
+        //                         'scanQRCode',
+        //                     ]
+        //                 });
+        //                 // wx.error(function (res) {
+        //                 //     alert("出错了：" + res.errMsg);//这个地方的好处就是wx.config配置错误，会弹出窗口哪里错误，然后根据微信文档查询即可。
+        //                 // });
+        //                 wx.ready(() => {
+        //                     //分享给朋友
+        //                     wx.onMenuShareAppMessage({
+        //                         title: '地图', // 分享标题
+        //                         link: 'pages/map/map?joinId=' + userPhones, // 分享链接
+        //                         imgUrl: '', // 分享图标
+        //                         type: '',
+        //                         dataUrl: '',
+        //                         success: function (data) {
+        //                             alert('分享成功');// 用户确认分享后执行的回调函数
+        //                         },
+        //                         cancel: function (data) {
+        //                             alert('已取消分享');// 用户取消分享后执行的回调函数
+        //                         }
+        //                     });
+        //                 })
+        //             }
+        //         });
+
+        // }
+
+        $.extend(Page.prototype, {
+            init: function () {
+                //加载所有事件
+                this.events();
+            },
+            events: function () {
+                //存储时间戳
+                this.setDate();
+                this.setMinutesSeconds();
+                //配置微信
+                this.getWxConfig();
+                this.setAreaId();
+                this.getWxConfigDate()//更改微信获取beacon
+            },
+            data: {
+                date: null,
+                leng: 0
+            },
+            //设置时间戳
+            setDate: function () {
+                this.data.date = this.getDate();
+            },
+            getWxConfigDate: function () {
+                var _this = this;
+                setInterval(function () {
+                    _this.getPosition();
+                    // _this.getcsPositon()//测试
+                    // _this.urgentEvacuation();//防疫
+                    if (locationX != undefined || locationX != '') {
+                        if (antiepidemic) {
+                            var datas = {
+                                "userId": userPhones,
+                                "buildingId": buildingIdAppId,
+                                "mapX": locationX,
+                                "mapY": locationY,
+                                "mapF": locationF,
+                            };
+                            $.ajax({
+                                url: basePath + "/servermApi/addPositionResults",
+                                type: "post",
+                                headers: {
+                                    Token: token
+                                },
+                                dataType: "json",
+                                data: JSON.stringify(datas),
+                                contentType: "application/json",
+                                //异步
+                                // async: false,
+                                success: function (res) {
+                                    // console.log(res);
+                                }
+                            });
+                        }
+                        //判断游戏是否进行中
+                        if (!snakeStartGame) {
+                            var datas = {
+                                "userId": userPhones,
+                                "buildingId": buildingIdAppId,
+                            };
+                            $.ajax({
+                                url: basePath + "/servermApi/getCurrentPositionFromRedis",
+                                type: "post",
+                                headers: {
+                                    Token: token
+                                },
+                                dataType: "json",
+                                data: JSON.stringify(datas),
+                                contentType: "application/json",
+                                //异步
+                                // async: false,
+                                success: function (res) {
+                                    mapPopUpBox(res.iBeacon)// 消息提示
+                                }
+                            });
+                            mapReadNew()//红色未读消息
+                            if (peoplesLocationTrue) {
+                                setTimeout(function () {
+                                    if (peoplesLocation() != undefined) {
+                                        peoplesLocation()//儿童监护
+                                    }
+                                    riskWarning();//危险警告
+                                }, 1000)
+                            }
+                        }
+                        if (snakeGame) {
+                            document.getElementById("lnglat").value = locationX + ',' + locationY;
+                            setTimeout(function () {
+                                getDataScore();//蛇积分
+                                mapdistances(locationX, locationY)
+                                // snakeLenght(locationX,locationY)
+                            }, 1000)
+                        }
+                    }
+                }, 1200)
+            },
+            setMinutesSeconds() {
+                var date = new Date();
+                this.minutesSeconds = date.getDate() +
+                    " " +
+                    date.getHours() +
+                    ":" +
+                    date.getMinutes() +
+                    ":" +
+                    date.getSeconds();
+            },
+            //得到时间戳
+            getDate: function () {
+                var date = new Date();
+                return (
+                    date.getFullYear() +
+                    "-" +
+                    (date.getMonth() + 1) +
+                    "-" +
+                    date.getDate() +
+                    " " +
+                    date.getHours() +
+                    ":" +
+                    date.getMinutes() +
+                    ":" +
+                    date.getSeconds()
+                );
+            },
+
+            //配置微信.config xy
+            getWxConfig: function (userPhones) {
+                var _this = this;
+                console.log(window.location.href)
+                $.ajax({
+                    type: "post",
+                    headers: {
+                        Token: token
+                    },
+                    url: basePath + "/servermApi/getWxConfig",
+                    data: {
+                        baseUrl: window.location.href
+                    },
+                    success: res => {
+                        console.log(res)
+                        var ticket = res.ticket;
+                        wx.config({
+                            debug: false,
+                            appId: res.appId,
+                            timestamp: res.timestamp,
+                            nonceStr: res.nonceStr,
+                            signature: res.signature,
+                            jsApiList: [
+                                "checkJsApi",
+                                "getNetworkType",
+                                "startSearchBeacons",
+                                "stopSearchBeacons",
+                                "onSearchBeacons",
+                                "onMenuShareAppMessage",
+                                'scanQRCode',
+                            ]
+                        });
+                        // wx.error(function (res) {
+                        //     alert("出错了：" + res.errMsg);//这个地方的好处就是wx.config配置错误，会弹出窗口哪里错误，然后根据微信文档查询即可。
+                        // });
+                        wx.ready(() => {
+                            //成功之后开始搜索Beacons
+                            // _this.startSearch(JSON.stringify(ticket));
+                            var u = navigator.userAgent;
+                            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+
+                            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+                            function test() {
+                                if (isAndroid == true) {
+                                    // alert("安卓手机")
+                                } else {
+                                    window.DeviceOrientationEvent.requestPermission().then(response => {
+                                        if (response === 'granted') {
+
+                                        } else if (response === "denied") {
+                                            swal("无法获取到您的定位，请退出重新登录")
+                                        }
+                                    }).catch(console.error);
+                                }
+                            }
+                            test()
+                            //分享给朋友
+                            wx.onMenuShareAppMessage({
+                                title: '地图', // 分享标题
+                                link: 'pages/map/map?joinId=' + userPhones, // 分享链接
+                                imgUrl: '', // 分享图标
+                                type: '',
+                                dataUrl: '',
+                                success: function (data) {
+                                    alert('分享成功');// 用户确认分享后执行的回调函数
+                                },
+                                cancel: function (data) {
+                                    alert('已取消分享');// 用户取消分享后执行的回调函数
+                                }
+                            });
+                        })
+                    }
+                });
+            }
+            ,
+            //配置成功搜索信号 xy
+            startSearch: function (ticket) {
+                var _this = this;
+                wx.startSearchBeacons({
+                    ticket: ticket,
+                    complete: argv => {
+                        var u = navigator.userAgent;
+                        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+
+                        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+                        function test() {
+                            if (isAndroid == true) {
+                                // alert("安卓手机")
+                            } else {
+                                window.DeviceOrientationEvent.requestPermission().then(response => {
+                                    if (response === 'granted') {
+
+                                    } else if (response === "denied") {
+                                        swal("无法获取到您的定位，请退出重新登录")
+                                    }
+                                }).catch(console.error);
+                            }
+                        }
+                        test()
+                        if (
+                            argv.errMsg == "startSearchBeacons:ok" ||
+                            argv.errMsg == "startSearchBeacons:already started"
+                        ) {
+                            wx.onSearchBeacons({
+                                complete: function (arg) {
+                                    //发送beacon以及相应信息 获得位置
+                                    // _this.getPosition(arg.beacons);
+                                    // //判断游戏是否进行中
+                                    // if (!snakeStartGame) {
+                                    //     mapPopUpBox(arg.beacons)
+                                    //     mapReadNew()//红色未读消息
+                                    //     if (peoplesLocationTrue) {
+                                    //         setTimeout(function () {
+                                    //             if (peoplesLocation() != undefined) {
+                                    //                 peoplesLocation()//儿童监护
+                                    //             }
+                                    //             riskWarning();//危险警告
+                                    //         }, 1000)
+                                    //     }
+                                    //     // if(positionShare){
+                                    //     //   if(joinGroupNames){
+                                    //     //     locationShare();//位置分享
+                                    //     //   }
+                                    //     // }
+                                    // }
+                                    // if (snakeGame) {
+                                    //     document.getElementById("lnglat").value = locationX + ',' + locationY;
+                                    //     setTimeout(function () {
+                                    //         getDataScore();//蛇积分
+                                    //         mapdistances(locationX, locationY)
+                                    //         // snakeLenght(locationX,locationY)
+                                    //     }, 1000)
+                                    // }
+                                }
+                            });
+                            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                                // iOS 13+
+                                // alert("iOS 13")
+                            } else {
+                                // non iOS 13+
+                                // alert("non iOS 13+")
+                            }
+
+                        } else if (argv.errMsg == "startSearchBeacons:bluetooth power off") {
+                            wx.stopSearchBeacons();
+                            swal("请您开启蓝牙服务")
+                        } else if (
+                            argv.errMsg == "startSearchBeacons:location service disable"
+                        ) {
+                            wx.stopSearchBeacons();
+                            swal("请您开启定位服务")
+                        } else if (argv.errMsg == "startSearchBeacons:system unsupported") {
+                            wx.stopSearchBeacons();
+                            swal("您的系统暂不支持")
+                        }
+                        // else {
+                        //     alert("error is " + argv.errMsg);
+                        //     swal("未知错误" + argv.errMsg + "@@@@@@@" + ticket)
+                        // }
+                    }
+                });
+
+            },
+            // 得到信息 过滤 筛选  定位 xy
+
+            getPosition: function () {//beaconsArray
+                var _this = this;
+                let iBeacons = [];
+                //筛选有用信息
+                // for (let a = 0; a < beaconsArray.length; a++) {
+                //     beaconsArray[a].rssi = parseInt(beaconsArray[a].rssi);
+                //     let obj = {};
+                //     if (beaconsArray[a].rssi != 0) {
+                //         obj = {
+                //             uuid: beaconsArray[a].uuid,
+                //             major: beaconsArray[a].major,
+                //             minor: beaconsArray[a].minor,
+                //             rssi: beaconsArray[a].rssi
+                //         };
+                //         iBeacons.push(obj);
+                //     }
+                // }
+                // alert(map.options.buildingId)
+                // alert(userPhones)
+                // alert(gSensor.getDiffStep())
+                // alert((window.heading * Math.PI) / 180)
+
+                var data = {
+                    buildingId: map.options.buildingId,
+                    "userId": userPhones,
+                    phoneModel: phoneModel,
+                    deviceHeading: (window.heading * Math.PI) / 180, //方向
+                    step: gSensor.getDiffStep(), //步数
+                };
+
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        Token: token
+                    },
+                    url: basePath + "/servermApi/getLocationBigSpace",
+                    data: JSON.stringify(data),
+                    async: true,
+                    success: function (res) {
+                        if (res.data == undefined || res.data == null || res.data == '') {
+                            return
+                        }
+                        // if (getLocationSnaker) {
+                        //     return
+                        // }
+                        var location = res.data.locationResultList[0];
+                        //中空区域处理逻辑
+                        if (!naviFlag) {
+                            for (var i = 0; i < hollowAreaArray.length; i++) {
+                                var hollowArea = hollowAreaArray[i];
+                                if (hollowArea.floor != location.mapF) {
+                                    continue;
+                                } else {
+                                    bound = LMap.latLngBounds(hollowArea.area);
+                                    var point = map.project([location.mapY, location.mapX], 16);
+                                    var closestPoint = closestPointOnPolyline(point, hollowArea.area);
+                                    if (closestPoint.distance <= 5) {
+                                        needReroute = false;
+                                    } else {
+                                        needReroute = true;
+                                    }
+                                    if (bound.contains([location.mapY, location.mapX])) {
+                                        var latlng = map.unproject(closestPoint, 16);
+                                        location.mapY = latlng.lat;
+                                        location.mapX = latlng.lng;
+                                    }
+                                }
+                            }
+                        }
+
+                        realLng = location.mapX;
+                        realLat = location.mapY;
+                        //根据指定楼层 是否开启路径吸附功能
+                        if (isiOS) {
+                            // if (location.mapF < 0) {
+                            if (endPosition != undefined && naviFlag) {
+                                var pointLocation = map.project([location.mapY, location.mapX], 16);
+                                //导航中的路径吸附
+                                var pathAdsorptionPoint = closestPointOnPolyline(pointLocation, map.options.paths[0].path);
+                                var pathAdsorptionLnglat = map.unproject(pathAdsorptionPoint, 16);
+                                location.mapX = pathAdsorptionLnglat.lng;
+                                location.mapY = pathAdsorptionLnglat.lat;
+                            }
+                            // }
+                        }
+                        if (isAndroid) {
+                            if (endPosition != undefined && naviFlag) {
+                                var pointLocation = map.project([location.mapY, location.mapX], 16);
+                                //导航中的路径吸附
+                                var pathAdsorptionPoint = closestPointOnPolyline(pointLocation, map.options.paths[0].path);
+                                var pathAdsorptionLnglat = map.unproject(pathAdsorptionPoint, 16);
+                                location.mapX = pathAdsorptionLnglat.lng;
+                                location.mapY = pathAdsorptionLnglat.lat;
+                            }
+                        }
+
+                        _this.data.mapX = location.mapY;
+                        _this.data.mapY = location.mapX;
+                        _this.data.mapF = location.mapF;
+
+                        locationX = location.mapX;
+                        locationY = location.mapY;
+                        locationF = location.mapF;
+                        markerpanto = LMap.setMarker({
+                            x: location.mapY,
+                            y: location.mapX,
+                            f: location.mapF,
+                            id: "PDR", //唯一
+                            type: "PDR", //类型
+                            icon: {
+                                iconUrl: "css/images/locating.png",
+                                className: 'lmap-marker-icon-marker-box',
+                                iconSize: [20, 30], //marker大小
+                                // iconAnchor: [4, 25]
+                                iconAnchor: [10, 15]
+                            }
+                        });
+
+                        //寻车终点提示
+                        if (parkingF == locationF) {
+                            var parkingDistance = map.distance([parkingY, parkingX], [locationY, locationX])
+                            if (parkingDistance <= 5.0 && carDistance) {
+                                swal({
+                                    title: "",
+                                    text: "已到达您的车附近？",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    closeOnConfirm: true,
+                                    confirmButtonText: "是",
+                                    cancelButtonText: "否",
+                                    confirmButtonColor: "#0099e8"
+                                }, function (parking) {
+                                    if (parking) {
+                                        finishCar();
+                                        carDistance = false;//防止距离小于5米一直弹框
+                                        //判断marker是否存在
+                                        if (clickIcon) {
+                                            clickIcon.remove();
+                                        }
+                                    } else {
+                                        // 停车结束按钮
+                                        $('#stoCarp').css('display', 'none')
+                                        if (map.__start != undefined) {
+                                            map.__start.remove();
+                                            map.__start = undefined;
+                                        }
+                                        if (map.__stop != undefined) {
+                                            map.__stop.remove();
+                                            map.__stop = undefined;
+                                        }
+                                        if (map._polyline != undefined) {
+                                            map._polyline.remove()
+                                            map._polyline = undefined;
+                                        }
+                                        //搜索框显示
+                                        document.getElementsByClassName("c-s-bar")[0].style.display = "block";
+                                        carDistance = false;//防止距离小于5米一直弹框
+                                        //判断marker是否存在
+                                        if (clickIcon) {
+                                            clickIcon.remove();
+                                        }
+                                    }
+                                });
+                                // alert("您已到达终点: " + endPosition.name);
+                                // naviFlag = false;
+                                // needReroute = true;
+                                if (map.__start != undefined) {
+                                    map.__start.remove();
+                                    map.__start = undefined;
+                                }
+                                if (map.__stop != undefined) {
+                                    map.__stop.remove();
+                                    map.__stop = undefined;
+                                }
+                                if (map._polyline != undefined) {
+                                    map._polyline.remove()
+                                    map._polyline = undefined;
+                                }
+                            }
+                        }
+                        if (firstTimeLocate) {
+                            setTimeout(function () {
+                                if (markerpanto != undefined) {
+                                    markerpanto.id = "lmap-marker-icon-marker-box";
+                                    $('.lmap-marker-icon-marker-box').html('<img class="main-marker-arrow" width="20px" height="30px" src="css/images/locating.png"/>')
+                                    scrollTops()
+                                }
+                            }, 1);
+                        }
+
+                        //当不开启跟随且地图显示楼层与用户所在楼层不相同时，隐藏定位marker
+                        if (location.mapF != map.getFloor() && centerMarkerFlag == false) {
+                            if ($('.main-marker-arrow')[0] != undefined) {
+                                // $('.main-marker-arrow')[0].style.visibility =  'hidden';
+                                $('.main-marker-arrow')[0].style.display = 'none';
+                            }
+                        }
+
+                        //刷新用户所在楼层的marker
+                        if (locationF == map.getFloor() && $('.main-marker-arrow')[0] == undefined) {
+                            var markers = LMap.LW.__markerList;
+                            for (var key in markers) {
+                                if (markers[key].__floor == map.getFloor()) {
+                                    markers[key].addTo(map);
+                                } else {
+                                    markers[key].remove();
+                                }
+                            }
+                            $('.lmap-marker-icon-marker-box').html('<img class="main-marker-arrow" width="20px" height="30px" src="css/images/locating.png"/>');
+                            setTimeout(function () {
+                                transitionOn();
+                            }, 1000)
+
+                        }
+
+                        //初次定位居中逻辑（防止网络卡顿，导致无法居中，使用setTimeout）
+                        if (firstTimeLocate) {
+                            if (location.mapF != map.getFloor()) {
+                                map.setFloor(locationF);
+                                var floorsText;
+                                if (locationF > 0) {
+                                    floorsText = "F" + locationF
+                                } else {
+                                    floorsText = "B" + Math.abs(locationF)
+                                }
+                                // document.getElementsByClassName('follrTop')[0].innerHTML = floorsText
+                            }
+                            map.setZoom(20);
+                            setTimeout(function () {
+                                if ($('.lmap-marker-icon-marker-box')[0] != undefined) {
+                                    $('.lmap-marker-icon-marker-box')[0].style.display = "block";
+                                    firstTimeLocate = false;
+                                }
+                                map.panTo([location.mapY, location.mapX]);
+                                // transitionOn();
+                            }, 1000);
+                            return;
+                        }
+
+                        //定位跟随逻辑
+                        if (centerMarkerFlag == true) {
+                            if (location.mapF != map.getFloor()) {
+                                map.setFloor(locationF);
+                                scrollTops()
+                                var floorsText;
+                                if (locationF > 0) {
+                                    floorsText = "F" + locationF
+                                } else {
+                                    floorsText = "B" + Math.abs(locationF)
+                                }
+                                // document.getElementsByClassName('follrTop')[0].innerHTML = floorsText
+                                if (snakeStartGame) {
+                                    loadBean()//加载豆
+                                }
+                            }
+                            if ($('.lmap-marker-icon-marker-box')[0] != undefined) {
+                                $('.lmap-marker-icon-marker-box')[0].style.display = "block";
+                            }
+                            map.panTo([location.mapY, location.mapX]);
+                        }
+
+                        if (endPosition != undefined && naviFlag) {
+                            var distanceToEnd = map.distance([location.mapY, location.mapX], endPosition.latlng);
+                            if (distanceToEnd <= 5.0 && location.mapF == endPosition.floor) {
+                                swal("您已到达终点: " + endPosition.name)
+                                naviFlag = false;
+                                needReroute = true;
+                                if (map.__start != undefined) {
+                                    map.__start.remove();
+                                    map.__start = undefined;
+                                }
+                                if (map.__stop != undefined) {
+                                    map.__stop.remove();
+                                    map.__stop = undefined;
+                                }
+                                if (map._polyline != undefined) {
+                                    map._polyline.remove()
+                                    map._polyline = undefined;
+                                }
+                                document.getElementsByClassName('c-r-routedetail')[0].style.display = "none";
+                                document.getElementsByClassName("c-s-bar")[0].style.display = "block";
+                                endPosition = undefined;
+                            }
+                        }
+
+                        //传统导航重新规划逻辑
+                        if (naviFlag) {
+                            transitionOn();
+                            _this.navi(realLat, realLng, location.mapF);
+
+                        }
+                    },
+                    statusCode: {
+                        0: function (response) {
+                            signalWeakCounter++;
+                            if (signalWeakCounter >= 10) {
+                                signalWeakCounter = 0;
+                                alertsAll("手机信号弱，定位效果不佳");
+                            }
+                        },
+                        200: function (response) {
+                            signalWeakCounter = 0;
+                            // console.log('ajax.statusCode: 200');
+                        },
+                        404: function (response) {
+                            // console.log('ajax.statusCode: 404');
+                        },
+                        500: function (response) {
+                            // console.log('ajax.statusCode: 500');
+                        }
+                    }
+                });
+
+            },
+
+            //测试
+            getcsPositon1: function () {
+                // var cusOperation = {
+                //     "buildingId": $.getUrlParam("buildingId")
+                // };
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        Token: token
+                    },
+                    url: basePath + "/servermApi/getPositionFromRedis",
+                    // data: JSON.stringify(data),
+                    async: true,
+                    success: function (res) {
+                        console.log(res)
+                        if (res.code == '10000') {
+                            if (res.data != '') {
+                                markerRemove();
+                                // if(transformPosition != res.data.length){
+                                // for (var i = 0; i < res.data.length+1; i++) {
+                                // LMap.delMarker("PDR"+i);
+                                // }
+                                // }
+                                var location;
+                                for (var i = 0; i < res.data.length; i++) {
+                                    location = res.data[i];
+                                    // var latlng = map.unproject(point, 16);
+                                    //删除当前marker生成新的位置
+                                    // LMap.delMarker("PDR" + i);
+                                    // var markerPosition = LMap.setMarker({
+                                    //     x: point.x,
+                                    //     y: point.y,
+                                    //     f: res.data[i].mapF,
+                                    //     id: "PDR" + i, //唯一
+                                    //     type: "PDR", //类型
+                                    //     icon: ({
+                                    //         iconUrl: "css/images/locating1.png",
+                                    //         className: 'markerAll transformMarker locationMarker' + i,
+                                    //         iconSize: [33, 33],
+                                    //         iconAnchor: [4, 25],
+                                    //     })
+                                    // });
+                                    console.log(location.mapY)
+                                    markerpanto = LMap.setMarker({
+                                        x: location.mapY,
+                                        y: location.mapX,
+                                        f: location.mapF,
+                                        id: "PDR" + i, //唯一
+                                        type: "PDR", //类型
+                                        icon: {
+                                            iconUrl: "css/images/locating1.png",
+                                            className: 'lmap-marker-icon-marker-box',
+                                            iconSize: [20, 30], //marker大小
+                                            // iconAnchor: [4, 25]
+                                            iconAnchor: [10, 15]
+                                        }
+                                    });
+                                    // .setLatLng([point.y,point.x]);
+                                    map.setFloor(2);
+                                }
+                                // transformPosition = res.data.length;
+                            }
+                            // else{
+                            // LMap.delMarker("PDR0");
+                            // }
+                        }
+                    }
+                });
+            },
+            getcsPositon: function () {
+                var _this = this;
+                $.ajax({
+                    url: basePath + "/servermApi/getPositionFromRedis",
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        Token: token
+                    },
+                    // data: JSON.stringify(datas),
+                    //同步
+                    async: false,
+                    success: function (res) {
+                        if (res.code == '10000') {
+                            // markerRemove()//防止marker再次显示
+                            if (res.data != '') {
+                                for (var i = 0; i < res.data.length; i++) {
+                                    var point = LMap.point(res.data[i].mapY, res.data[i].mapX);
+                                    //删除当前marker生成新的位置
+                                    LMap.delMarker("PDRUWB" + i);
+                                    console.log("我在这里!" + point.x + ";mapY:" + point.y);
+                                    // if (res.data[i].mapF == map.getFloor()) {
+                                    LMap.setMarker({
+                                        x: point.x,
+                                        y: point.y,
+                                        f: 2,
+                                        id: "PDRUWB" + i, //唯一
+                                        type: "PDRUWB", //类型
+                                        icon: ({
+                                            iconUrl: "https://uat.servera.com.cn/mobileMap/server-m-mobile/css/images/image2.png",
+                                            className: 'markerAll transformMarker locationMarker' + i,
+                                            iconSize: [32, 32],
+                                            iconAnchor: [25, 30]
+                                        })
+                                    });
+                                    // }.setLatLng([point.y, point.x]);
+                                    map.setFloor(2);
+                                }
+                            }
+
+                            //随机位置点击
+                            // map.on('click', function (e) {
+                            //     LMap.marker(e.latlng).addTo(map);
+                            //     console.log(e.latlng);
+                            // })
+                        }
+                    }
+
+                });
+            },
+            //疏散
+            urgentEvacuation: function () {
+                var alertStatusAll = false;
+                var datas = {
+                    "buildingId": buildingIdAppId,
+                };
+                $.ajax({
+                    url: basePath + "/servermApi/getAlertInfo",
+                    type: "post",
+                    headers: {
+                        Token: token
+                    },
+                    dataType: "json",
+                    data: JSON.stringify(datas),
+                    contentType: "application/json",
+                    //异步
+                    // async: false,
+                    success: function (res) {
+                        console.log(res);
+                        // if (res.code == '10000') {
+                        //     if (res.data.alertStatus == true) {
+                        //         //疏散开启中
+                        //         // alertsAll("请按照地图所指示路线进行疏散");
+                        //         alertStatusNavi = true;
+                        //         if (alertStatusNavi) {
+                        //             // departureNavigation();
+                        //             $('.animationsCss').css('display', 'block')//开启屏幕闪烁
+                        //             if (locationF == 1) {
+                        //                 naviType = "sameFloor";
+                        //                 departureNavigation(naviType);
+                        //             } else {
+                        //                 naviType = "useEscalator";
+                        //                 departureNavigation(naviType);
+                        //             }
+                        //             //定位跟随开启
+                        //             centerMarkerOn()
+                        //             //疫情
+                        //             $(".contentantiepidemic").css("display", 'none');
+                        //             // $(".antiepidemic").css("display", 'block');
+
+                        //             //api
+                        //             document.getElementsByClassName('foot')[0].style.visibility = 'visible' //用户跟随按钮显示
+                        //             document.getElementsByClassName('c-s-page')[0].style.display = 'none'//关闭poi显示
+                        //             document.getElementsByClassName('s-cancelClose')[0].style.display = 'block'//返回poi隐藏
+
+                        //             //消息页面退出
+                        //             $('#notification').hide()//二级菜单隐藏
+                        //             $('#notificationList').hide()//三级菜单隐藏
+                        //             $('.ImgLeftCaption1').attr('src', 'css/images/icon/information.png')
+                        //             //分享页面退出
+                        //             $('.imagesIcomShare').css('display', 'none');//选择头像
+                        //             $('#shareId').css('display', 'none');//人员
+
+                        //             $('.ImgLeftCaption4').attr('src', 'css/images/icon/share.png')
+                        //             $('#tab-msg').css('display', 'block')
+                        //             $('#tab-eatPeas').css('display', 'block')
+                        //             $('#tab-childrens').css('display', 'block')
+                        //             $('#tab-car').css('display', 'block')
+                        //             $('#tab-share').css('display', 'block')
+
+                        //             //贪吃蛇退出
+                        //             if (snakeStartGame) {
+                        //                 overGame();
+                        //             }
+
+                        //             //儿童监护退出
+                        //             document.getElementsByClassName('installReturn')[0].style.visibility = "collapse"
+                        //             $('.ImgLeftCaption6').attr('src', 'css/images/icon/children.png')
+                        //             $(".childrensDiv").css('display', 'none')
+
+                        //             //停车退出
+                        //             $('#car_find').css('display', 'none')
+                        //             $('.carNavMoble').css('display', 'none');
+                        //         }
+                        //     } else {
+                        //         //关闭疏散
+                        //         if (alertStatusNavi) {
+                        //             $('.animationsCss').css('display', 'none')//关闭屏幕闪烁
+                        //             alertStatusNavi = false;
+                        //             //取消跟随
+                        //             centerMarker()
+                        //             //贪吃蛇
+                        //             // clearInterval(snakeSetInterval);
+                        //             // poi
+                        //             map.dragging.enable();//启用拖动地图事件
+                        //             map.scrollWheelZoom.enable();//启用手势放大缩小
+                        //             map.touchZoom.enable();//启用鼠标放大缩小事件
+                        //             //紧急疏散关闭清除线 marker 和导航地点
+                        //             if ($(".c-r-routedetail")[0] != undefined) {
+                        //                 $(".c-r-routedetail")[0].style.display = "none";
+                        //             }
+                        //             if ($(".c-s-bar")[0] != undefined) {
+                        //                 $(".c-s-bar")[0].style.display = "block";
+                        //             }
+
+                        //             if (map.__stop) {
+                        //                 map.__stop.remove();
+                        //                 map.__stop = null;
+                        //             }
+                        //             if (map.__start) {
+                        //                 map.__start.remove();
+                        //                 map.__start = null;
+                        //             }
+                        //             if (map._polyline) {
+                        //                 map._polyline.remove();
+                        //                 map._polyline = null;
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                    }
+                });
+            },
+            //重新规划导航路线()
+            navi: function (y, x, f) {
+                if (x == undefined || y == undefined || f == undefined) {
+                    return;
+                }
+                if (!map._polyline) {
+                    console.log("!map._polyline")
+                    return;
+                }
+                if (f != endPosition.floor && "sameFloor" == naviType) {
+                    floorsStraight();
+                    return;
+                }
+                //定位点 经纬度转像素
+                var latlng = LMap.latLng(y, x);
+                var position = map.project(latlng, 16);
+                //导航点    经纬度转像素
+                var mins = [];
+                var positions = [];
+                var latlngs = map._polyline.getLatLngs();
+                for (var a = 0; a < latlngs.length; a++) {
+                    //便利 转像素
+                    positions[a] = map.project(latlngs[a], 16);
+                    //如果不是第一个  则两两一计算  存在mins中
+                    if (a >= 1 && a < latlngs.length) {
+                        var min = LMap.LineUtil.pointToSegmentDistance(position, positions[a - 1],
+                            positions[a]);
+                        mins.push(min)
+                    }
+                }
+                // //mins取最小值
+                var dist = Math.min.apply(null, mins);
+                //最小值 是否大于3米 或者不再一层(重新)
+                if (f != startPosition.floor || dist >= distnum) {
+                    locationX = x;
+                    locationY = y;
+                    if (f == endPosition.floor) {
+                        transitionOn();
+                        naviType = "sameFloor";
+                        departureNavigation(naviType);
+                        return;
+                    }
+                    transitionOn();
+                    var count = getElevatorEscalatorCount(f)
+                    var naviTypeTemp;
+                    if (count.elevatorCount <= 0) {
+                        naviTypeTemp = "useEscalator";
+                    } else if (count.escalatorCount <= 0) {
+                        naviTypeTemp = "useElevator";
+                    } else {
+                        naviTypeTemp = naviType;
+                    }
+                    departureNavigation(naviTypeTemp);
+                }
+                if (f != map.getFloor()) {
+                    renewPolyLine();
+                }
+            },
+            ceshi: function () {
+                var testArray = [
+                    //星巴克前
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    //New Look London店前右侧
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18479",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+
+                    //vanke二楼 topfeeling
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18537",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18537",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18537",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18537",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18537",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18537",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18537",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18537",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18537",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18537",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    //星巴克前
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18483",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    //New Look London店前右侧
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18479",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18479",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18479",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18479",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    //New Look London店前左侧
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18477",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18477",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18477",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18477",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    //LENSCRAFTERS店前
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18459",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18459",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18459",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18459",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    //adidas店前
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18453",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18453",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18453",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18453",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    //苹果店前
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18461",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18461",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18461",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18461",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    //华为店前
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18463",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18463",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18463",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18463",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    //GAP店前
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18467",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18467",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18467",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }],
+                    [{
+                        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                        "major": "10073",
+                        "minor": "18467",
+                        "rssi": "-60",
+                        "time": "2018-09-04 15:23:57.0"
+                    }]
+                    // //抓娃娃机前空地
+                    // [{
+                    //     "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+                    //     "major": "10073",
+                    //     "minor": "18207",
+                    //     "rssi": "-60",
+                    //     "time": "2018-09-04 15:23:57.0"
+                    // }]
+                ];
+                //测试接口  testNumber自增
+                this.getPosition(testArray[testNumber]);
+                testNumber++;
+            },
+            setAreaId: function () {
+                var that = this;
+                map.on('shopclick', function (data) {
+                    that.data.endAreaId = data.properties.areaId;
+                })
+            },
+        })
+        var page = new Page();
+        page.init();
+        // 切换楼层的逻辑
+        //地图加载成功之后
+        map.once('mapready', function () {
+            var datasareas = {
+                "uName": userName
+            }
+            $.ajax({
+                url: basePath + "/servermApi/getApplicationUserName",
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                headers: {
+                    Token: token
+                },
+                data: JSON.stringify(datasareas),
+                //同步
+                async: true,
+                success: function (res) {
+                    console.log(res)
+                    $('.snakeGame').css('display', 'none');
+                    for (var i = 0; i < res.data.length; i++) {
+                        if (res.data[i].applicationName == '儿童监护') {
+                            loadJs("js/childrens.js");
+                            peoplesLocationTrue = true;
+                        } else if (res.data[i].applicationName == '智慧寻车') {
+                            loadJs("js/parking.js");
+                        } else if (res.data[i].applicationName == '位置分享') {
+                            loadJs("js/locationShare.js");
+                            positionShare = true;
+                        } else if (res.data[i].applicationName == '贪吃蛇') {
+                            loadJs("js/snakeGame.js");
+                            snakeGame = true;
+                        }
+                    }
+                }
+            });
+            //楼层切换之后
+            map.on('floorchanged', function () {
+                //存所有用户使用的marker
+
+                var markers = LMap.LW.__markerList;
+                // console.log(markers)
+                console.log(map.getFloor())
+                // for (var key in markers) {
+
+                //     if (markers[key].__floor == map.getFloor()) {
+                //         markers[key].addTo(map);
+                //     } else {
+
+                //         markers[key].remove();
+                //     }
+                // }
+            })
+            //位置分享 初始版本
+            $('.control-floor-item').each(function () {
+                $(this).click(function () {
+                    var ImgLeftCapt = $('.ImgLeftCaption4').attr('src');
+                    if (ImgLeftCapt != 'css/images/icon/share.png') {
+                        var floors = $(this).html();
+                        var floorsNumber;
+                        if (floors.slice(0, 1) == 'F') {
+                            floorsNumber = floors.slice(1);
+                        } else {
+                            floorsNumber = '-' + floors.slice(1);
+                        }
+                        $('.markerF1').each(function () {
+                            if ($(this).hasClass(floorsNumber)) {
+                                $(this).css('display', 'block')
+                            } else {
+                                $(this).css('display', 'none')
+                            }
+                        })
+
+                    }
+
+                })
+            })
+            // 假如楼层过长就加固定长度加一个滑动条
+            if ($('.control-floor-warp').height() >= 150) {
+                $('.control-floor-warp').css('height', '150px');
+                $('.control-floor-warp').css('overflow', 'auto')
+            }
+        })
+    </script>
+</body>
+
+</html>

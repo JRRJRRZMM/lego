@@ -1,0 +1,294 @@
+@media (max-width: 480px) {
+  .logolh{
+    padding-top: 10px!important;
+    margin: 0 0 -10px 10%!important;
+  }
+  .ulText {
+    width: 100%;
+    padding: 20px 10px 30px 0px!important;
+  }
+  .ulText li{
+    float:left;
+    /* margin-left: 5px!important; */
+    font-size: 16px!important;
+    margin-left: 25px!important;
+  }
+  .imgTopContetn{
+    margin-top: 50px!important;
+  }
+  .logoiniut{
+    width: 71%!important;
+    margin-top: 15%!important;
+    border: 1px solid #ccc;
+    top: 20%!important;
+
+  }
+  .logInWebstars{
+    font-size: 20px!important;
+    margin-top: 5%!important;
+  }
+  .passName{
+    margin-top: 20px!important;
+    font-size: 13px!important;
+  }
+  .valueParent{
+    margin-left: 8%!important;
+  }
+  .code{
+    line-height: 30px!important;
+    font-size: 12px!important;
+    width: 21%;
+    margin-left: 11px!important;
+  }
+  .authCode{
+    font-size: 13px!important;
+  }
+  .navText{
+    float:right;
+    margin-right:1%!important;
+  }
+}
+@media (max-width: 375px) {
+  .ulText li{
+    margin-left: 15px!important;
+  }
+}
+/* @media (min-width: 1024px) {
+
+} */
+@media (max-width: 360px) {
+  .ulText li{
+    margin-left: 10px!important;
+  }
+}
+.logolh{
+  height:10%;
+  margin-left:20%;
+}
+.imgtext{
+  font-size:25px;
+  margin-left:10px;
+  margin-top: 1%;
+  margin-bottom: 20px;
+  padding-top: 8px;
+}
+/* .img_bag{
+  background:url('../images/banner.png')no-repeat;
+    width:100%;
+    height:90%;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
+    position:absolute;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg-login.png',sizingMethod='scale');
+} */
+.logoiniut{
+  position:absolute;
+  background:#FFF;
+  text-align: center;
+  right: 18%;
+  z-index: 9999;
+  top: 28%;
+  width: 350px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.ulText {
+  list-style: none;
+  margin-top: -50px;
+}
+.ulText li{
+  float:left;
+  margin-left:33px;
+  font-size: 20px;
+}
+.ulText li:hover{
+  border-bottom: 2px solid #0851a0;
+  color: #666;
+}
+.ulText a{
+  text-decoration: none;
+  color: #666;
+}
+.navText{
+  float:right;
+  margin-right:23%
+}
+.logInWebstars{
+  width: 100%;
+  font-size: 30px;
+  color: #0851a0;
+  margin-top: 10%;
+}
+.passName{
+  border-radius: 3px;
+  border: 1px solid #d9d9d9;
+  height: 2rem;
+  margin-top: 30px;
+  height: 35px;
+  font-size: 15px;
+  text-indent: 2rem;
+  color: #666!important;
+}
+.authCode{
+  border-radius: 3px;
+  border: 1px solid #d9d9d9;
+  height: 2rem;
+  margin-top: 30px;
+  height: 35px;
+  font-size: 15px;
+  text-indent: 2rem;
+  color: #666!important;
+}
+.valueParent{
+  margin-left: 10.5%;
+  text-align: left;
+  padding-bottom: 30px;
+  margin-top: 30px;
+}
+.checkValue{
+  margin-top: 30px ;
+  padding-bottom: 30px;
+}
+.checkValueaSpan{
+  font-size: 10px;
+  color: #666;
+}
+.btnLogIn{
+  padding-bottom: 30px;
+  padding-top: 30px;
+  font-size: 30px;
+}
+.userName{
+  background-image: url('../images/name-normal.png')!important;
+  background-size: auto 18px;
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+}
+.userNameTwo{
+  background-image: url('../images/name-selected.png')!important;
+  background-size: auto 18px;
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+}
+.passWordName{
+  background-image: url('../images/password-normal.png')!important;
+  background-size: auto 18px;
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+}
+.passWordNameTwo{
+  background-image: url('../images/password-selected.png')!important;
+  background-size: auto 18px;
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+}
+.authCodeName{
+  background-image: url('../images/verification code-normal.png')!important;
+  background-size: auto 18px;
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+}
+.authCodeNameTwo{
+  background-image: url('../images/verification code-selected.png')!important;
+  background-size: auto 18px;
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+}
+.ulLogein{
+  border-bottom: 2px solid #0851a0;
+}
+.upload-awrp {
+	overflow: hidden;
+	margin: 120px 0;
+}
+.code {
+	font-family: Arial;
+	font-style: italic;
+	font-size: 2rem;
+	border: 0;
+	padding: 2px 3px;
+	letter-spacing: 3px;
+	font-weight: bolder;
+	float: left;
+	cursor: pointer;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #6D6D72;
+}
+#itemImg1,#itemImg2,#itemImg3{
+  /* height: 100%!important; */
+  /* padding-top: 87px!important; */
+}
+.banner .dots li{
+  opacity: 1!important;
+}
+.dots{
+  bottom: 1px!important;
+}
+.btnLogeIn{
+  position: absolute;
+  right: 10px;
+}
+.btnCloseLogeIn{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.mobile-inner-nav a{
+			position: relative;
+			display: block;
+			overflow: hidden;
+			border: none !important;
+		}
+	.mobile-inner-nav a:after{
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		z-index: 1;
+		background-color: rgba(255,255,255,0.3);
+		-webkit-animation-duration: 0.7s;
+		animation-duration: 0.7s;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+		-webkit-animation-name: ReturnToNormal;
+		animation-name: ReturnToNormal;
+	}
+
+.mobile-inner-nav{
+	top: 60px!important;
+}
+.logo_STARNET{
+  position: fixed;
+  z-index: 1024;
+  bottom: 10px;
+  right: 0px;
+  background: #fff;
+  padding: 2px 10px 4px 5px;
+  border: 1px solid #ccc;
+  border-bottom-left-radius: 30px;
+  border-top-left-radius: 30px;
+  /* border-radius:30px; */
+  opacity: .9;
+
+}
+.logo_STARNET span{
+  position: relative;
+  top: 3px;
+  color: #464646;
+}
+.logo_plogo{
+  font-size: 1.3em;
+  padding: 0 10px;
+  color: #666;
+  float:right;
+  position: relative;
+  top: 10px;
+  left: -5px;
+}
+.menu_ul_logIn{
+  height: 60px;
+  line-height: 10px;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+<title>markerOffset</title>
+<!-- <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" /> -->
+<link rel="stylesheet" href="../css/main1119.css" />
+<!-- <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&;key=0250860ccb5953fa5d655e8acf40ebb7&;plugin=AMap.PolyEditor,AMap.CircleEditor"></script> -->
+<script type="text/javascript" src="../js/mapsCircleEditor.js"></script>
+<script src="../plugins/jquery/jquery-3.1.0.min.js"></script>
+<script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/layui.all.js"></script>
+<link href="../plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/commonality.css" rel="stylesheet" />
+</head>
+<body>
+	<div id="container"></div>
+	<!-- 下面是画点线面 -->
+	<!-- <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script> -->
+	<!-- li拖动上下移动 -->
+	<!-- 下面是图片放大缩小css -->
+	<!-- <script type="text/javascript" src="../js/jqueryui.js"></script> -->
+	<!-- <script type="text/javascript" src="../js/jquery.mousewheel.min.js"></script> -->
+	<!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <!-- <script type="text/javascript" src="../js/dragZoom.js"></script> -->
+	<!-- <script type="text/javascript" src="../js/addMap.js"></script> -->
+  <script type="text/javascript">
+    var map = new AMap.Map("container", {
+      resizeEnable: true,
+      keyboardEnable:false,//按键取消移动
+      center: [116.404778, 39.905357],//地图中心点
+      zoom: 18 //地图显示的缩放级别   默认18
+    });
+    //为地图注册click事件获取鼠标点击出的经纬度坐标
+    var clickEventListener = map.on('click', function(e) {
+    });
+    var auto = new AMap.Autocomplete({
+        input: "tipinput"
+    });
+    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+    function select(e) {
+        if (e.poi && e.poi.location) {
+            map.setZoom(15);
+            map.setCenter(e.poi.location);
+        }
+    }
+    function editRectangle() {
+      var Rectangle = new AMap.Rectangle({
+        bounds: new AMap.Bounds(new AMap.LngLat(116.404778, 39.905357), new AMap.Bounds(new AMap.LngLat(116.407058, 39.904514)))
+      })
+
+      Rectangle.setMap(mapObj)
+
+      maoObj.plugin(['AMap.RectangleEditor'], function() {
+        var RectangleEditor = new AMap.RectangleEditor(mapObj, Rectangle)
+        RectangleEditor.open()
+      })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	</meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	</meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	</meta>
+	<title>建筑管理</title>
+  <link href="../plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/bootstrap-table.css" rel="stylesheet" />
+	<link href="../css/commonality.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../css/building.css">
+	<script src="../js/bin.js"></script>
+	<style type="text/css">
+	tr{
+		text-align: center;
+	}
+	</style>
+</head>
+
+<body>
+	<div class="" style="width:100%;height:50px;border:1px solid #efefef;background:#fff;padding-left:2%;font-size:15px;line-height:50px;color: #666;">
+		<b>地图管理 > 建筑管理管理</b>
+	</div>
+	<div id="buildingtable" style="display:block">
+		<div class="bootstrap-table">
+			<div class="fixed-table-toolbar">
+				<div class="bs-bars pull-left" style="width: 100%">
+					<div id="toolbar">
+						<div>
+							<button id="addBtn" class="btn btn-primary">添加</button>
+							<button id="modifyBtn" class="btn btn-primary">修改</button>
+							<button id="delBtn" class="btn btn-danger">删除</button>
+						</div>
+						<div>
+							<span>建筑名称: </span>&nbsp;<input type="text" id="searchBuildingName" value=""></input>&nbsp;&nbsp;&nbsp;
+							<button id="searchBtn" class="btn btn btn-primary">搜索</button>
+
+						</div>
+					</div>
+					<table id="table" class="table table-bordered"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="floortablediv" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel"><span id="buildingNameFloor"></span>&nbsp;&nbsp;&nbsp;&nbsp;楼层设置</h4>
+				</div>
+				<input type="hidden" id="buildingCenterValue"></input>
+				<input type="hidden" id="buildingIdFloor"></input>
+				<div class="bs-bars pull-left">
+					<div>
+						<div id="toolbarFloor">
+							<button id="addBtnFloor" style="margin-left: 20px;" class="btn btn-primary">添加</button>
+						</div>
+					</div>
+				</div>
+				<table id="tableFloor"></table>
+				<div class="modal-footer">
+					<span id="tip"></span>
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="addBuildingBox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">建筑物编辑添加</h4>
+				</div>
+				<div class="modal-body">
+					<form id="buildingForm" class="form-horizontal" role="form" enctype="multipart/form-data">
+						<div class="form-group" id="buildingIdForm">
+							<label for="buildingName" class="col-sm-3 control-label">建筑物ID:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="buildingId" id="buildingId" readonly='true' value=" "></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="buildingName" class="col-sm-3 control-label">建筑物名称:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="buildingName" id="buildingName" placeholder="请输入建筑名称"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="buildingType" class="col-sm-3 control-label">建筑物类型:</label>
+							<div class="col-sm-8">
+								<select id="buildingType" name="buildingType" class="form-control"></select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="floorCnt" class="col-sm-3 control-label">楼层数量:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="floorCnt" id="floorCnt" maxlength="10" placeholder="请输入楼层数量"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="buildingAddress" class="col-sm-3 control-label">建筑物地址:</label>
+							<div class="col-sm-8">
+								<div id="cityBox">
+									<select id="provice" class="form-control" style="width:33%;float:left;"></select>
+									<select id="city" class="form-control" style="width:33%;float:left;"><option value=''>请选择</option></select>
+									<select id="county" class="form-control" style="width:33%;float:left;"><option value=''>请选择</option></select>
+
+								</div>
+								<input type="text" class="form-control" name="buildingAddress" id="buildingAddress" maxlength="30" placeholder="请输入建筑物地址"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="buildingArea" class="col-sm-3 control-label">建筑物面积:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="buildingArea" id="buildingArea" maxlength="10" placeholder="请输入建筑物面积"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="authorizationFile" class="col-sm-3 control-label">授权文件:</label>
+							<div class="col-sm-8">
+								<input type="file" name="file" id="authorizationFile" placeholder="pdf格式文件"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="cadFile" class="col-sm-3 control-label">结构图文件:</label>
+							<div class="col-sm-8">
+								<input type="file" name="file" id="cadFile" placeholder="zip压缩包"></input>
+							</div>
+						</div>
+
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<span id="tip"></span>
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button id="smtAddBtn" type="submit" class="btn btn-primary">添加</button>
+					<button id="smtModifyBtn" type="submit" class="btn btn-primary">修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--
+ -->
+	<div id="addFloorBox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">添加楼层</h4>
+				</div>
+				<div class="modal-body">
+					<form id="floorForm" class="form-horizontal" role="form" enctype="form-data">
+						<div class="form-group">
+							<label for="buildingIdFloorDiv" class="col-sm-3 control-label">所属建筑</label>
+							<div class="col-sm-8">
+								<input type="hidden" id="floorId"></input>
+								<input type="text" class="form-control" id="buildingIdFloorDiv" name="buildingId"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="floorValue" class="col-sm-3 control-label">楼层层级</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="floorLevel" name="floorLevel" maxlength="5" placeholder="请输入楼层名称"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="floorValue" class="col-sm-3 control-label">楼层名称</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="floorValue" name="floorValue" maxlength="5" placeholder="请输入楼层名称"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="floorProperty" class="col-sm-3 control-label">楼层属性</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="floorProperty" name="floorProperty" maxlength="10" placeholder="请输入楼层属性"></input>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<span id="tip"></span>
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button id="smtAddBtnFloor" type="submit" class="btn btn-primary">添加</button>
+					<button id="smtModifyBtnFloor" type="submit" class="btn btn-primary">修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="imgBox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body" style="overflow:hidden;width:550Px;height:700px;">
+					<img id="floorImage" style="width:550Px;height:700px;" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="pdfBox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body" style="overflow:hidden;height:700px;">
+					<embed id="pdfurl" type="application/pdf" width="100%" height="100%"></embed>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="alert alert-success alert_title" style="position:absolute;right:2%;bottom:5%;display:none;z-index:100000;">
+		<strong id="successfully">成功!</strong>
+	</div>
+	<script src="../js/jquery-3.2.1.min.js"></script>
+	<script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../js/pdfobject.js"></script>
+	<script src="../js/bootstrap-table.js"></script>
+	<script src="../js/bootstrap-table-zh-CN.js"></script>
+	<script src="../js/jquery.mousewheel.min.js"></script>
+	<script src="../js/dragZoom.js"></script>
+	<script src="../js/match.js"></script>
+	<script src="../js/building.js"></script>
+</body>
+
+</html>

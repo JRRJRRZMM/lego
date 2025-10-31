@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="../images/bitbug_favicon.ico" type="image/x-icon" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Responsive Admin Dashboard Template">
+  <meta name="keywords" content="admin,dashboard">
+  <meta name="author" content="stacks">
+  <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>乐高乐华</title>
+  <!-- Styles -->
+  <link href="../css/family.css" rel="stylesheet">
+  <link href="../plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 字体库 -->
+  <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="../plugins/icomoon/style.css" rel="stylesheet">
+  <link href="../plugins/uniform/css/default.css" rel="stylesheet" />
+  <link href="../plugins/switchery/switchery.min.css" rel="stylesheet" />
+  <link href="../plugins/nvd3/nv.d3.min.css" rel="stylesheet">
+  <link href="../css/space.css" rel="stylesheet">
+  <link href="../css/custom.css" rel="stylesheet">
+  <link href="../css/mainpage.css" rel="stylesheet">
+
+  <style media="screen">
+  tr{
+    text-align: center;
+  }
+  </style>
+</head>
+
+<body>
+    <div id="loadings" style="width:100%;height:100%;z-index:9999999999;position:absolute;display:none">
+        <img src="../images/loading.gif" alt="" width="200px" style="margin-left: 45%;margin-top: 20%;">
+      </div>
+  <!-- Page Container -->
+  <div class="page-container">
+
+    <!-- Page Sidebar -->
+    <div class="page-sidebar" style="width:7%;">
+      <a class="logo-box" href="">
+        <img src="../images/WebstarslogoRGB.png" alt="" width="35px" height="35px">
+        <i class="icon-close" id="sidebar-toggle-button-close"></i>
+      </a>
+      <div class="page-sidebar-inner" style="position: relative;overflow: hidden;width: 100%;">
+        <div class="page-sidebar-menu" style="margin-top: 0px;">
+          <ul class="accordion-menu" id='ztreeList'>
+            <li class="eachchecked active-page active-none menuTestUlName" type="" name="homePage.html" style="text-align: center;padding-top: 10px;height: 80px;border-top: 1px solid #848484;">
+              <a href="#" style="display: contents;">
+                  <img src="../images/loginimg.png" alt="" width="35%">
+                <div>首页</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Page Content -->
+    <div class="page-content" style="width:93%;background:#eaedf2;">
+      <!-- Page Header -->
+      <div class="page-header" style="height:56px!important;">
+        <div class="search-form">
+          <form action="#" method="GET">
+            <div class="input-group">
+              <input type="text" name="search" class="form-control search-input" placeholder="Type something...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" id="close-search" type="button"><i class="icon-close"></i></button>
+              </span>
+            </div>
+          </form>
+        </div>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid" style="padding:0px;">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <div class="logo-sm">
+                <a href="javascript:void(0)" id="sidebar-toggle-button"><i class="fa fa-bars"></i></a>
+                <a class="logo-box" href="mainpage.html"><span>Space</span></a>
+              </div>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                aria-expanded="false">
+                <i class="fa fa-angle-down"></i>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <p class="Webstarsterrace"><b>星网覆盖室内地图服务平台</b></p>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown dropdownhover" id="myWorkOrder">
+                  <a href="javascript:void(0)" >
+                    <span style="font-size:16px;color: #fdf7f7;">工单</span>
+                  </a>
+                </li>
+                <li class="dropdown dropdownhover">
+                  <a href="javascript:void(0)" id="notification"><p class="" style="font-size:16px;color: #fdf7f7;margin-top: -2px;">消息
+                  </p></a>
+                </li>
+                <li class="dropdown dropdownhover">
+                  <a href="../html/document.html" target="_blank" >
+                    <span style="font-size:16px;color: #fdf7f7;">开发文档</span>
+                  </a>
+                </li>
+                <li class="dropdown user-dropdown">
+                  <a href="#" class="dropdown-toggle" id="peoplrMessage" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: #fdf7f7;">
+                    <span class="glyphicon glyphicon-user" style="font-size:16px;top:3px">
+                      <p style="float:right;margin-top:-7px;margin-left:3px;" id="userNameId"></p>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li id="amend_password"><a>修改密码</a></li>
+                    <li id="logOut"><a>退出</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div id="contactsss" class="page-inner" style="width: 100%;height: 93%;">
+        <div id="menu_list" >
+          <ul id="menu_list_ul">
+          </ul>
+        </div>
+        <iframe name="myiframe" id="myiframe" src='homePage.html' frameborder="0" align="left" width="100%" height="100%;float:left"></iframe>
+      </div>
+    </div>
+  </div>
+  <!-- 更改密码 -->
+  <div id="mobleBox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+        </div>
+        <div class="modal-body">
+          <form id="userForm" class="form-horizontal" role="form">
+            <input type="hidden" name="id" id="id"></input>
+            <div class="form-group">
+              <label for="old_Password" class="col-sm-3 control-label">旧密码</label>
+              <div class="col-sm-8">
+                <input type="password" minlength="6" maxlength='12' placeholder="请输入旧密码" class="form-control"
+                  name="old_Password" id="old_Password"></input>
+                  <!-- onkeyup="value=value.replace(/[^\w\/]/ig,'')" -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="new_Password" class="col-sm-3 control-label">新密码</label>
+              <div class="col-sm-8">
+                <input type="password" minlength="6" maxlength='12' placeholder="请输入新密码" class="form-control"
+                  name="new_Password" id="new_Password"></input>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="confirm_Password" class="col-sm-3 control-label">确认密码</label>
+              <div class="col-sm-8">
+                <input type="password" minlength='6' maxlength='12' placeholder="请输入确认密码" class="form-control"
+                  name="confirm_Password" id="confirm_Password"></input>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" id="btn_addremove">
+          <span id="tip"></span>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button id="modification" type="submit" class="btn btn-primary">修改</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 通知 -->
+  <div id="notification_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title" id="">通知</h3>
+        </div>
+        <div class="modal-body">
+          <div class="bs-example bs-example-type" data-example-id="simple-headings">
+            <table class="table">
+              <tbody id="message">
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer" id="">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-success alert_title" style="position:absolute;right:2%;bottom:5%;display:none;z-index:100000;">
+    <strong id="successfully">成功!</strong>
+  </div>
+  <script src="../js/jquery-3.2.1.min.js"></script>
+  <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <script src="../plugins/uniform/js/jquery.uniform.standalone.js"></script>
+  <script src="../plugins/flot/jquery.flot.min.js"></script>
+  <script src="../plugins/switchery/switchery.min.js"></script>
+  <script src="../plugins/d3/d3.min.js"></script>
+  <script src="../plugins/nvd3/nv.d3.min.js"></script>
+  <script src="../plugins/chartjs/chart.min.js"></script>
+  <script src="../js/space.min.js"></script>
+  <script src="../js/pages/dashboard.js"></script>
+  <!-- <script src="../js/layui.all.js"></script> -->
+  <script src="../js/bin.js"></script>
+  <script type="text/javascript" src="../js/mainpage.js"></script>
+</body>
+</html>

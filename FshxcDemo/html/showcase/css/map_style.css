@@ -1,0 +1,104 @@
+.container-fluid{
+    padding: 0!important;
+}
+.container-fluid{
+    /* position: fixed; */
+    display: flex;
+    flex-direction: column;
+    /* width: 100%; */
+    height: 100%;
+    z-index: 99999;
+}
+#app{
+    flex-grow: 1;
+    width:100%;
+}
+.foot{
+    /* height: 3rem; */
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* box-shadow: 0px 0px 30px #fff; */
+    background: #fff;
+    border-top: 1px solid #f1f0f0;
+}
+#foot .icon{
+    width: 1rem;
+    height: 1rem;
+    background-size:100% 100%;
+    background-repeat: no-repeat;
+}
+.floor{
+    background:url("images/icon/information.png");
+}
+.information{
+    background:url("images/icon/floor.png");
+}
+.location{
+    background:url("images/icon/location.png");
+}
+.share{
+    background:url("images/icon/share.png");
+}
+.carLocating{
+    background:url("images/icon/carLocating.png");
+}
+#map_nav{
+    height:49.6px;width:100%;
+    position:absolute;
+    bottom: 0;
+    z-index: 1004;
+    display:flex;
+    background:#fff;
+}
+#map_nav>div{
+    flex-grow: 1;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#map_nav>div>img{
+    width:45px;
+    height:45px;
+}
+.ImgLeftCaptionBadge{
+    background-color: #e80707!important;
+    position: absolute;
+    /* top: 0px; */
+    bottom: 30px;
+    left: 12%;
+    z-index: 9999999;
+  }
+  .badge{
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 5px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    /* background-color: #777; */
+    border-radius: 10px;
+    display: none;
+  }
+  .lmap-bottom .lmap-control{
+    margin-bottom: 0px;
+  }
+  .lmap-left .lmap-control{
+    margin-left: 0px;
+  }
+  .lmap-left{
+    z-index: 100200!important;
+    width: 100%;
+  }
+  .lmap-right{
+    margin-bottom: 50px!important;
+  }
+  .panel-footer{
+    background: #fff!important;
+  }

@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <title>DeviceOrientationEvent</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="js/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+  <button onclick="requestPermission()">陀螺仪</button>
+
+  <div id="arrow"></div>
+</body>
+
+</html>
+<script>
+        // var u = navigator.userAgent;
+        // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        //
+        // var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        // function test() {
+        //   if (isAndroid == true) {
+        //     location.href = "http://uri6.com/tkio/3aEfmya"
+        //     console.log("安卓手机")
+        //   } else {
+        //     location.href = "http://uri6.com/tkio/MBFbAva"
+        //     console.log("苹果手机")
+        //   }
+        // }
+        // test()
+    // try {
+        var text = "";
+        alert("addEventListener")
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+          // iOS 13+
+          // alert("iOS 13")
+        } else {
+          // non iOS 13+
+          // alert("non iOS 13+")
+        }
+        requestPermission = ()=> {
+          window.DeviceOrientationEvent.requestPermission().then(response => {
+            if (response === 'granted') {
+              window.addEventListener("deviceorientation", orientationHandler, false);
+            }
+          }).catch(console.error);
+        };
+        function orientationHandler(event) {
+          alert(JSON.stringify(event));
+            text = ""
+            var arrow = document.getElementById("arrow");
+            var alpha;
+            if (event.webkitCompassHeading) {
+                text += "IOS <br>";
+                alpha = event.webkitCompassHeading;
+                alert(event.webkitCompassHeading+"IOS <br>");
+            } else {
+              alert(event.webkitCompassHeading+"Android <br>");
+                alpha = event.alpha;
+                text += "Android <br>";
+            }
+            alert(alpha)
+            text += "左右旋转：rotate alpha{" + Math.round(alpha) + "deg)<br>";
+            // text += "前后旋转：rotate beta{" + Math.round(event.beta) + "deg)<br>";
+            // text += "扭转设备：rotate gamma{" + Math.round(event.gamma) + "deg)<br>";
+            arrow.innerHTML = text;
+        }
+    // catch (e) {
+    //     $("#arrow").html(e.message)
+    // }
+</script>

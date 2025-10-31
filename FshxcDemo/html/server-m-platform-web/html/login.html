@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <link rel="shortcut icon" href="../images/bitbug_favicon.ico" type="image/x-icon" />
+      <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+      <!-- <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+      <link rel="stylesheet" href="../css/bootstrap.min.css" />
+      <link href="../css/loginstyle.css" rel="stylesheet">
+      <link rel="stylesheet" href="../css/main_s.css" />
+      <link rel="stylesheet" href="../css/mains.css" />
+      <link rel="stylesheet" href="../css/flexslider.css" type="text/css" media="screen" />
+      <link href="../css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+      <script src="../js/jquery-3.2.1.min.js"></script>
+      <script src="../js/logeInBlur.js"></script>
+      <script src="../js/bootstrap.min.js"></script>
+      <script src="../js/unslider.min.js"></script>
+      <script src="../js/authCode.js"></script>
+      <title>乐高乐华（北京）科技有限公司</title>
+      <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+
+    <body>
+      <div class="htmleaf-container">
+		    <div class="wrapper">
+		    <div class="wrapper-inner">
+          <div class="mobile">
+		        <div class="mobile-inner">
+		          <div class="mobile-inner-header">
+		            <div class="mobile-inner-header-icon mobile-inner-header-icon-out"><span></span><span></span></div>
+		          </div>
+		          <div class="mobile-inner-nav">
+		            <a href="index.html">首页</a>
+		            <a href="WebstarsLaugh.html">应用方案</a>
+		            <a href="AboutUs.html">关于我们</a>
+		            <a style="color:#3597db" href="#">登录</a>
+		          </div>
+		        </div>
+		      </div>
+        </div>
+      </div>
+    </div>
+      <div class="header-top" style="background: #f7f7f7;z-index: 9999999;width: 100%;height:60px;">
+  	    <div class="container" style="height:60px;">
+	  		<div class="logo">
+				  <a href="#"><img src="../images/WebstarslogoRGB.png" width="40px" height="40px" alt="" /></a>
+          <p class="logo_plogo">乐高乐华(北京)科技有限公司</p>
+			  </div>
+				<div class="head-nav" style="height:60px;">
+					<ul class="menu_ul_logIn">
+						<li><a class="pageUrl" href="#">首页</a></li>
+						<li><a href="WebstarsLaugh.html">应用方案</a></li>
+						<li><a href="AboutUs.html">关于我们</a></li>
+						<li><a style="color:#3597db" href="">登录</a></li>
+						<div class="clearfix"> </div>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+		</div>
+	</div>
+  <div class="" >
+    <img id='itemImgs1' class="img-responsive" src="../images/login_img.jpg" width="100%"  alt="...">
+    <div id="disembark" class="logoiniut row">
+      <!-- <button id="btnCloseLogeIn" class="btnCloseLogeIn" type="button">
+        &times;
+      </button> -->
+      <div class="logInWebstars">
+        欢迎登录
+      </div>
+      <div class="row">
+        <input id="userName" class="col-md-8 col-xs-8 col-xs-offset-2 col-md-offset-2 userName passName" type="text" name="" value="" placeholder="请输入用户名">
+      </div>
+      <div class="row">
+        <input id="passWord" class="col-md-8 col-xs-8 col-xs-offset-2  col-md-offset-2 passWordName passName" type="password" name="" value="" placeholder="请输入密码">
+      </div>
+      <div class="row col-md-10 col-xs-8 col-xs-offset-2 col-md-offset-2 valueParent">
+        <input class="checkValue" type="checkbox" name="1" value="">
+        <span class="checkValueaSpan">记住密码</span>
+      </div>
+      <div class="row btnLogIn">
+        <button id="login" type="button" class="col-md-8 col-xs-8 col-xs-offset-2 col-md-offset-2 btn btn-primary">登录</button>
+      </div>
+    </div>
+    <div class="logo_STARNET">
+      <img src="../images/WebstarslogoRGB.png" width="40px" height="40px" alt="" />
+      <span>星网覆盖</span>
+    </div>
+  </div>
+  <div class="alert alert-success alert_title" style="position:absolute;right:2%;bottom:5%;display:none;z-index:100000;">
+		<strong id="successfully">成功!</strong>
+	</div>
+  <div class="Copyright" style="color: #464646;font-size: 16px;position: absolute;z-index: 999;width: 100%;text-align: center;;bottom: 0%;">
+    <a style="color:#3597db" target="_blank" href="http://beian.miit.gov.cn">京ICP备16039368号-2</a>  Copyright;  2015-2018 星网覆盖  All Rights Reserved
+  </div>
+  <script src="../js/bin.js"></script>
+  <script type="text/javascript">
+    var basePath = url();
+    $(function () {
+      $('.pageUrl').click(function(){
+        window.location.href = '../index.html';
+      })
+      document.onkeydown = function (e) {
+        if (e.keyCode == 13) {
+          loginFile();
+        }
+      }
+      $("#login").click(function () {
+        loginFile();
+      })
+      $("#userName").focus(function(){
+        $("#userName").addClass('userNameTwo');
+        $("#userName").removeClass('userName');
+      });
+      $("#userName").blur(function(){
+        $("#userName").addClass('userName');
+        $("#userName").removeClass('userNameTwo');
+      });
+      $("#passWord").focus(function(){
+        $("#passWord").addClass('passWordNameTwo');
+        $("#blursLock").removeClass('passWordName');
+      });
+      $("#passWord").blur(function(){
+        $("#passWord").addClass('passWordName');
+        $("#passWord").removeClass('passWordNameTwo');
+      });
+    })
+    function loginFile() {
+      var myUrl = basePath + "/login";
+      var userName = $("#userName").val();
+      var passWord = $("#passWord").val();
+      if (userName == '' || userName == null) {
+        alerts('用户名不能为空');
+        return false;
+      }
+      if (passWord == '' || passWord == null) {
+        alerts('密码不能为空');
+        return false;
+      }
+      var sysUser = {
+        "username": userName,
+        "password": passWord,
+      };
+      $.ajax({
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        url: myUrl,
+        data: JSON.stringify(sysUser),
+        success: function (args) {
+          if (args.code == '10000') {
+            sessionStorage.setItem('jsessionid', args.data);
+            window.location.href = '../html/mainpage.html'; //后台主页
+          } else {
+            alerts(args.msg);
+          }
+        }
+      });
+    }
+    //统一提示信息
+    function alerts(e) {
+      $('#successfully').html(e)
+      $('.alert_title').show();
+      setTimeout(function () {
+        $('.alert_title').hide();
+      }, 2000)
+    }
+  </script>
+      <script type="text/javascript">
+      $(window).load(function () {
+        $(".mobile-inner-header-icon").click(function(){
+          $(this).toggleClass("mobile-inner-header-icon-click mobile-inner-header-icon-out");
+          $(".mobile-inner-nav").slideToggle(250);
+        });
+        var style = '';
+        $(".mobile-inner-nav a").each(function( index ) {
+          style += '.mobile-inner-nav a:nth-child('+ (index+1) +'):after {animation-delay:' +((index+1)/10)+'s} ';
+         });
+        $("head").append($('<style>'+style+'</style>'));
+      });
+        $(document).ready(function(e) {
+          var itemImgs1=$(window).width();
+          if(itemImgs1<=480){
+            $('.mobile-inner-header-icon').css('display','block')
+            $('#itemImgs1').attr('src','../images/moble_login.png');
+          }else if(itemImgs1>480){
+
+          }else if (itemImgs1>1024) {
+
+          }
+          /**
+    			 * 验证码
+    			 * codeLength:验证码长度
+    			 */
+    			$('#check-code').code_Obj({
+    				codeLength: 5
+    			});
+        });
+        $(function(){
+          $('.logIns').click(function(){
+            window.location.href = 'html/logIn.html';
+          })
+        })
+        </script>
+
+    </body>
+</html>
+﻿
