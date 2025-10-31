@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="translated-ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- 以下为禁止微信X5浏览器使用缓存 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!--[if lt IE 9]>
+        <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+        <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    <!-- 以上为禁止微信X5浏览器使用缓存 -->
+    <title>室内地图</title>
+    <link rel="shortcut icon" href="css/images/bitbug_favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/border.css">
+    <link rel="stylesheet" href="css/LMap.css">
+    <link rel="stylesheet" href="css/map_style.css">
+    <link rel="stylesheet" href="css/Map_PageSon.css">
+    <link rel="stylesheet" href="css/sweetalert.css" />
+    <link rel="stylesheet" href="css/xy_PositionDemo.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/LMap-integral.css" />
+    <link rel="stylesheet" href="css/childrens.css" />
+    <link rel="stylesheet" href="css/baseStation.css" />
+    <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="" style="width:100%;height:100%;">
+        <!-- 地图 -->
+        <div id="appMap" style="width:100%;height:100%;"></div>
+        <!-- 定位 -->
+        <div id="tab-follow">
+            <img class="ImgLeftCaption3" src="css/images/icon/location.png" alt="" style="width: 50px; height: 50px;">
+        </div>
+        <!-- 设备状态和搜索设备 -->
+        <div class="equipmentToggle">
+            <img id="shrinkBtn" src="images/bottomIcon.png" alt="" style="width: 35px; height: 35px;">
+        </div>
+        <!-- 初始化Beacon巡检状态 -->
+        <div class="initCheckStatus">
+            <img id="initCheckStatusBtn" src="images/polling.png" alt="" style="width: 35px; height: 35px;">
+        </div>
+        <!-- 图例 -->
+        <div class="cutlineContent">
+          <label for="" style="width:100%">
+            <span>在线有广播：</span>
+            <img src="images/normalBeacon.png" alt="">
+          </label>
+          <label for="" style="width:100%">
+            <span>在线无广播：</span>
+            <img src="images/yellowBeacon.png" alt="">
+          </label>
+          <label for="" style="width:100%">
+            <span>掉线有广播：</span>
+            <img src="images/blueBeacon.png" alt="">
+          </label>
+          <label for="" style="width:100%">
+            <span>掉线无广播：</span>
+            <img src="images/redBeacon.png" alt="">
+          </label>
+          <label for="" style="width:100%">
+            <span>已巡检在线有广播：</span>
+            <img src="images/normalBeaconGif2.png" alt="" style="width:30px;height:30px;margin-top: -5px;">
+          </label>
+          <label for="" style="width:100%">
+            <span>已巡检掉线有广播：</span>
+            <img src="images/blueBeaconGif2.png" alt="" style="width:30px;height:30px;margin-top: -5px;">
+          </label>
+          <div class="cutlineText">
+            在beacon搜索模式中闪烁代表已搜索到信号
+          </div>
+        </div>
+        <div class="cutlineToggle">
+            <img id="cutlineImg" src="images/cutline.png" alt="" style="width: 35px; height: 35px;">
+        </div>
+        <!-- <button id="initNaviStartBtn" z-index: 99999; onclick="page.ceshi();">初始化导航起点</button> -->
+        <div class="foot">
+            <div class="tab-iconsweepCode" id="tab-sweepCode">
+                <!-- <img src="css/images/icon/location.png" alt="" style="width: 50px; height: 50px;"> -->
+                <div class="bensetation_Btn">
+                    更换设备
+                </div>
+            </div>
+            <div class="tab-iconsweepCode" id="tab-currentState" style="border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;">
+                <!-- <img src="css/images/icon/location.png" alt="" style="width: 50px; height: 50px;"> -->
+                <div id="pollingBencon" class="bensetation_Btn">
+                    开启巡检功能
+                </div>
+            </div>
+            <div class="tab-iconsweepCode" id="tab-detection">
+                <!-- <img src="css/images/icon/location.png" alt="" style="width: 50px; height: 50px;"> -->
+                <div class="bensetation_Btn">
+                    beacon检测
+                </div>
+            </div>
+        </div>
+        <div class="MajorMinor">
+            <div class="" style="height: 120px;line-height: 6%;padding: 0px 10px;background: #fff;z-index: 99;">
+                <label for="" style="margin-top: 3px;width:100%">
+                    <input type="text" name="" value="" id="external" placeholder="请输入外壳编号后四位" class="form-control" style="width: 75%;float: left;">
+                    <button type="button" name="button" class="btn btn-primary" style="margin: 0 10px;float:right" onclick="startCheckBeaconByExternalNumber()">确定</button>
+                </label>
+                <label for="" style="margin-top: 3px;width:100%">
+                    <input type="text" name="" value="" id="minor" placeholder="请输入设备Minor" class="form-control" style="width: 75%;float: left;">
+                    <button type="button" name="button" class="btn btn-primary" style="margin: 0 10px;float:right" onclick="startCheckBeaconByMinor()">确定</button>
+                </label>
+                <div class="MajorMinorlabel">
+                    <span>状态：</span>
+                    <span id="showBeaconStatus"></span>
+                </div>
+            </div>
+            <div class="MajorMinorDiv">
+
+            </div>
+        </div>
+        <!-- 扫码或输入信息 -->
+        <div class="serialNumber">
+            <ul style="height: 100%;">
+                <li id="sweepCode">扫码</li>
+                <li id="importCode">输入编号</li>
+            </ul>
+        </div>
+        <div class="importCodeDiv">
+            <label for="" style="width: 100%;padding: 10px;">
+                <input type="text" name="" value="" placeholder="请输入编号" class="form-control importCodeDivInput" style="float: left;width: 82%;">
+                <button type="button" name="button" class="btn btn-primary importCodeDivBtn" style="float: right;">确定</button>
+            </label>
+        </div>
+        <div class="equipmentMessage">
+            <label for="" style="width:100%">设备编号：
+                <span class="" id="equipmentId"></span>
+            </label>
+            <label for="" style="width:100%">设备状态：
+                <span class="" id="equipmentBeacon"></span>
+            </label>
+            <label for="" style="width:100%">执行状态：
+                <span class="" id="equipmentState"></span>
+            </label>
+            <label for="" style="width: 100%">
+                <input type="text" name="" value="" placeholder="请输入设备编号" class="form-control certainInput" style="float: left;width: 80%">
+                <button type="button" name="button" class="btn btn-primary certainBtn" style="float: right;">确定</button>
+            </label>
+        </div>
+    </div>
+    <div class="alertsAll">
+        成功
+    </div>
+    <!-- 设备详细提示信息 -->
+    <div id="delBox" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document" style="height: 98%">
+            <div class="modal-content" style="height: 92%">
+                <div class="modal-body" style="height: 90%;overflow:auto">
+                    <div class="form-group">
+                        <label for="physicalPosition">在线状态：</label>
+                        <input type="text" class="disabled" disabled id="onLine" style="background: #fff;">
+                    </div>
+                    <div class="form-group">
+                        <label for="externalNumbers">外壳编号：</label>
+                        <input type="text" class="disabled" disabled id="externalNumbers" style="background: #fff;">
+                    </div>
+                    <div class="form-group">
+                        <label for="positionNumbers">位置编号：</label>
+                        <input type="text" class="disabled" disabled id="positionNumbers" style="background: #fff;">
+                    </div>
+                    <div class="form-group">
+                        <label for="devBlueId">蓝牙编号：</label>
+                        <input type="text" class="disabled" disabled id="devBlueId" style="background: #fff;">
+                    </div>
+                    <div class="form-group">
+                        <label for="physicalPosition">物理位置：</label>
+                        <input type="text" style="width: 100%;background: #fff;" class="disabled" disabled id="physicalPosition">
+                    </div>
+                    <div class="form-group">
+                        <label for="uuid">Uuid:</label>
+                        <input type="text" style="width: 100%;background: #fff;" class="disabled" disabled id="uuid">
+                    </div>
+                    <div class="form-group">
+                        <label for="major">Major：</label>
+                        <input type="text" class="disabled" disabled id="major" style="background: #fff;">
+                    </div>
+                    <div class="form-group">
+                        <label for="minorData">Minor：</label>
+                        <input type="text" class="disabled" disabled id="minorData" style="background: #fff;">
+                    </div>
+                    <div class="form-group">
+                        <label for="mapZ">设备高度：</label>
+                        <input type="text" class="disabled" disabled id="mapZ" style="background: #fff;">
+                    </div>
+                    <div class="form-group">
+                        <label for="binVersion">ROM版本：</label>
+                        <input type="text" class="disabled" disabled id="binVersion" style="background: #fff;">
+                    </div>
+                    <div class="form-group">
+                        <label for="bootVersion">BOOT版本：</label>
+                        <input type="text" class="disabled" disabled id="bootVersion" style="background: #fff;">
+                    </div>
+                    <div class="form-group">
+                        <label for="hardWareVersion">硬件版本：</label>
+                        <input type="text" class="disabled" disabled id="hardWareVersion" style="background: #fff;">
+                    </div>
+                    <div class="form-group">
+                        <label for="ipAddress">IP地址：</label>
+                        <input type="text" class="disabled" disabled id="ipAddress" style="background: #fff;">
+                    </div>
+                    <div class="form-group" id="remarksMessage">
+                        <label for="remarks">备注：</label>
+                        <input type="text" style="width: 100%;background: #fff;" class="disabled" disabled id="remarksMsg">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pollingContentBeacon">
+      <div class="pollingContentTitleBeacon">
+        确定后将初始化Beacon状态是否开启？
+      </div>
+      <!-- <input type="text" class="form-control" id="pollingPassword" style=""> -->
+      <div class="pollingContentBtnBeacon"  style="margin-top:20px">
+        <button type="button" id="closePollingBeacon" class="btn btn-default" style="width:80px">关闭</button>
+        <button type="button" id="confirmPollingBeacon" class="btn btn-primary" style="width:80px">确定</button>
+      </div>
+    </div>
+    <div class="pollingContent">
+      <div class="pollingContentTitle">
+        输入密码后将开启巡检是否开启？
+      </div>
+      <input type="text" class="form-control" id="pollingPassword" style="margin-top:20px">
+      <div class="pollingContentBtn">
+        <button type="button" id="closePolling" class="btn btn-default" style="width:80px">关闭</button>
+        <button type="button" id="confirmPolling" class="btn btn-primary" style="width:80px">确定</button>
+      </div>
+    </div>
+    <div class="moblePollingContent">
+
+    </div>
+    <script src="js/lmap-src.js"></script>
+    <script src="js/jweixin-1.3.2.js"></script>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/G-Sensor.js"></script>
+    <script src="js/LMap-extend-xxtt.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/LMap-integral.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/token.js"></script>
+    <script src="js/cookie.js"></script>
+    <script src="js/wx.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/commonality.js"></script>
+    <script src="js/pageButton.js"></script>
+    <script src="js/replaceEquipment.js"></script>
+    <script src="js/polling.js"></script>
+    <script src="js/beaconDetection.js"></script>
+    <script src="js/beaconMarkerMessage.js"></script>
+    <script src="js/index.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.3.4/vconsole.min.js"></script>
+    <script>
+      // $(function(){
+      //   var vConsole = new VConsole();
+      //   // console.log('Hello world');
+      // })
+      // if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      //     // iOS 13+
+      //     // alert("iOS 13")
+      // } else {
+      //     // non iOS 13+
+      //     // alert("non iOS 13+")
+      // }
+      // var u = navigator.userAgent;
+      // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+      // var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      // alert(isAndroid+'安卓手机');
+      // alert(isiOS+'ios手机');
+      // function test() {
+      //     if (isAndroid == true) {
+      //         alert("安卓手机")
+      //     } else {
+      //       alert(window);
+      //       alert(JSON.stringify(window.DeviceOrientationEvent));
+      //       alert(window.DeviceOrientationEvent.requestPermission()+'11111')
+      //         window.DeviceOrientationEvent.requestPermission().then(response => {
+      //           alert(response)
+      //             if (response === 'granted') {
+      //
+      //             } else if (response === "denied") {
+      //                 swal("无法获取到您的定位，请退出重新登录")
+      //             }
+      //         }).catch(console.error);
+      //     }
+      // }
+      // test()//判断是安卓还是ios解决marker旋转
+    </script>
+</body>
+
+</html>

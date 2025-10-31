@@ -1,0 +1,20 @@
+.bs-bars {
+  /* float: none !important; */
+  width: 100%
+}
+
+.input_width input {
+  width: 80px !important;
+}
+
+.input_width select {
+  width: 80px !important;
+  display: initial;
+}
+/* table居中 */
+.fixed-table-container{
+  /* text-align: center; */
+}
+th{
+  text-align: center;
+}

@@ -1,0 +1,64 @@
+a, a:hover {
+	color: #222;
+}
+
+.form-inline {
+	display: flex;
+	justify-content: center;
+	margin: 20px;
+}
+
+.form-inline .form-group {
+	margin: 10px;
+}
+
+.xblock {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 20px;
+	/* background: #F2F2F2; */
+	align-items: center
+}
+.modal-backdrop.in {
+	display: none
+}
+
+#toolbar input, #toolbar select {
+	width: 150px;
+	height: 30px;
+	border-radius: 5px;
+	border: 1px solid #ccc
+}
+
+#toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#toolbar>* {
+  padding: 10px 20px;
+	/* margin-right: 5px */
+}
+#table{
+  padding: 20px;
+}
+.fixed-table-container{
+  margin: 0 20px!important;
+}
+.layui-layer-content{
+	/* width: 200px; */
+	padding: 10px 20px;
+	/* height: 50px; */
+	/* line-height: 50px; */
+	background: #000;
+	opacity: .8;
+	border-radius: 10px;
+	color: #fff;
+	font-size: 18px;
+	position: fixed;
+	bottom: 5%;
+	text-align: center;
+	right: 3%;
+	z-index: 9999999;
+}

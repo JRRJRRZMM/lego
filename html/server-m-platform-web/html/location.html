@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>建筑管理</title>
+<link rel="stylesheet" href="../css/bootstrap.min.css" />
+<link href="../css/bootstrap-table.css" rel="stylesheet" />
+<link href="../css/commonality.css" rel="stylesheet" />
+<style type="text/css">
+.pdfobject-container {
+	height: 500px;
+}
+.pdfobject {
+	border: 1px solid #ccc;
+}
+
+a, a:hover {
+	color: #222;
+}
+
+.form-inline {
+	display: flex;
+	justify-content: center;
+	margin: 20px;
+}
+
+.form-inline .form-group {
+	margin: 10px;
+}
+
+.xblock {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	background: #F2F2F2;
+	align-items: center
+}
+
+.modal-backdrop.in {
+	display: none
+}
+
+#toolbar input, #toolbar select {
+	width: 150px;
+	height: 30px;
+	border-radius: 5px;
+	border: 1px solid #ccc
+}
+
+#toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#toolbar>* {
+	/* margin-right: 5px */
+}
+.pull-left{
+	/* float: none !important; */
+  width: 100%
+}
+.btninit{
+	margin-left: 20px;
+}
+th{
+	text-align: center!important;
+}
+tr{
+	text-align: center!important;
+}
+</style>
+</head>
+<body>
+	<div class="" style="width:100%;height:50px;border:1px solid #efefef;background:#fff;padding-left:2%;font-size:15px;line-height:50px;color: #666;">
+		<b>地图管理 > 定位管理</b>
+	</div>
+<div id="buildingtable" style="display:block">
+<div class="bootstrap-table">
+<div class="fixed-table-toolbar">
+<div class="bs-bars pull-left" style="width: 100%">
+	<div id="toolbar">
+		<div class="">
+
+		</div>
+		<div>
+			<span>建筑名称: </span>&nbsp;<input type="text" id="searchBuildingName" value=""></input>&nbsp;&nbsp;&nbsp;
+			<button id="searchBtn" class="btn btn btn-primary">搜索</button>
+		</div>
+	</div>
+	<table id="table"></table>
+	</div></div></div>
+</div>
+<div id="floortablediv" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel"><span id="buildingNameFloor"></span>&nbsp;&nbsp;&nbsp;&nbsp;楼层设置</h4>
+			</div>
+				<input type = "hidden" id = "buildingCenterValue" ></input>
+				<input type = "hidden" id = "buildingIdFloor" ></input>
+				<table id="tableFloor"></table>
+				<div class="modal-footer">
+					<span id="tip"></span>
+					<button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+				</div>
+		</div>
+	</div>
+</div>
+<div id="imgBox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+				<div class="modal-body" style="overflow:hidden;width:550Px;height:700px;">
+				<img id="floorImage" style="width:550Px;height:700px;" />
+				</div>
+		</div>
+	</div>
+</div>
+
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="../js/pdfobject.js"></script>
+<script src="../js/bootstrap-table.js"></script>
+<script src="../js/bootstrap-table-zh-CN.js"></script>
+<script src="../js/jquery.mousewheel.min.js"></script>
+<script src="../js/dragZoom.js"></script>
+<script src="../js/match.js"></script>
+<script src="../js/bin.js"></script>
+<script src="../js/location.js"></script>
+</body>
+</html>

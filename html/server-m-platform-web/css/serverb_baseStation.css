@@ -1,0 +1,215 @@
+
+#app {
+    width: 100%;
+    height: 70%;
+}
+
+#app {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+}
+
+#map {
+    -webkit-box-flex: 3;
+    -ms-flex-positive: 3;
+    flex-grow: 3;
+}
+
+#control {
+    border: 1px solid #ddd;
+    width: 8rem;
+    padding: 10px;
+}
+
+.panel-body .itme {
+    line-height: 40px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.panel-body .itme p {
+    width: 2.5rem;
+}
+
+#floor {
+    width: 1.5rem;
+}
+
+.panel-body .itme span {
+    display: inline-block;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+.itme.last p {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+.itme.last span {
+    margin-left: .2rem;
+    width: 1rem;
+}
+
+p {
+    margin: 0
+}
+
+.lmap-control-floor {
+    /* display: none; */
+}
+
+.operation {
+    width: 285px;
+}
+
+.operation .row {
+    padding-bottom: 8px;
+}
+
+.inputDisabled {
+    border: none;
+    box-shadow: none;
+    background: #fff;
+}
+#app {
+    width: 100%;
+    height: 70%;
+}
+
+#app {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+}
+
+#map {
+    -webkit-box-flex: 3;
+    -ms-flex-positive: 3;
+    flex-grow: 3;
+}
+
+#control {
+    border: 1px solid #ddd;
+    width: 5rem;
+    padding: 10px;
+}
+
+.panel-body .itme {
+    line-height: 40px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.panel-body .itme p {
+    width: 2.5rem;
+}
+
+#floor {
+    width: 1.5rem;
+}
+
+.panel-body .itme>span {
+    display: inline-block;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    height: 40px;
+}
+
+.itme.last p {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+.itme.last span {
+    margin-left: .2rem;
+    width: 1rem;
+}
+
+p {
+    margin: 0
+}
+
+.lmap-control-floor {
+    /* display: none; */
+}
+
+.operation {
+    width: 285px;
+}
+
+.operation .row {
+    padding-bottom: 8px;
+}
+
+.inputDisabled {
+    border: none;
+    box-shadow: none;
+    background: #fff;
+}
+
+#destinationBox {
+    border: 1px solid #ddd;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    z-index: 11111;
+    line-height: 40px;
+    text-align: center;
+    display: none;
+}
+
+#close {
+    float: right;
+    display: inline-block;
+    line-height: 40px;
+    width: 40px;
+}
+
+#relation,#special,#useElevator{
+    position: relative;
+    top: 5px;
+}
+.messageMoble{
+  height: 92%;
+  width: 20%;
+  border: 1px solid #ddd;
+  position: absolute;
+  top: 56px;
+  border-right: none;
+  background:#fff;
+  padding: 15px;
+  right: 0px;
+  overflow: auto;
+  z-index: 10000;
+  display: none;
+}
+.buildingNameBase{
+  position: absolute;
+  top: 3%;
+  width: 97%;
+  text-align: center;
+  font-size: 18px;
+  height: 0px;
+}

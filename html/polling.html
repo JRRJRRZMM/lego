@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="translated-ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- 以下为禁止微信X5浏览器使用缓存 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!--[if lt IE 9]>
+        <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+        <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    <!-- 以上为禁止微信X5浏览器使用缓存 -->
+    <title>室内地图</title>
+    <link rel="shortcut icon" href="../css/images/bitbug_favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/border.css">
+    <link rel="stylesheet" href="../css/LMap.css">
+    <link rel="stylesheet" href="../css/map_style.css">
+    <link rel="stylesheet" href="../css/Map_PageSon.css">
+    <link rel="stylesheet" href="../css/sweetalert.css" />
+    <link rel="stylesheet" href="../css/xy_PositionDemo.css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/LMap-integral.css" />
+    <link rel="stylesheet" href="../css/childrens.css" />
+    <link rel="stylesheet" href="../css/baseStation.css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="" style="width:100%;height:100%;">
+        <!-- 地图 -->
+        <div id="pollingMap" style="width:100%;height:100%;"></div>
+    </div>
+
+    <script src="../js/lmap-src.js"></script>
+    <script src="../js/jweixin-1.3.2.js"></script>
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/G-Sensor.js"></script>
+    <script src="../js/LMap-extend-xxtt.js"></script>
+    <script src="../js/sweetalert.min.js"></script>
+    <script src="../js/LMap-integral.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/polling.js"></script>
+    <script>
+      var buildingIdAppId = 'BJ0114VANK';
+      //储存中空区域数据
+      var hollowAreaArray = new Array();
+      //根据buildId获取用户AppId AppSecret
+      var appId;
+      var secret;
+      var userName;
+      if (getQueryString("buildingId") != null) {
+          buildingIdAppId = getQueryString("buildingId");
+      }
+      $.ajax({
+          url: basePath + "/tokenConfig/getAppIdSercet",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({
+              "buildingId": buildingIdAppId
+          }),
+          //同步
+          async: false,
+          success: function (res) {
+              appId = res.data.appId;
+              secret = res.data.secret;
+              userName = res.data.userName;
+          }
+      });
+      //获取token
+      var token;
+      $.ajax({
+          url: basePath + "/token",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({
+              "appId": appId,
+              "secret": secret,
+              //prd 路径
+              // "url": "https://www.servera.com.cn"
+              //VS Code 本地路径
+              "url": "http://127.0.0.1:5500"
+          }),
+          //同步
+          async: false,
+          success: function (res) {
+              token = res.data;
+          }
+      });
+      var grayscale = LMap.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '<a href="https://openstreetmap.org">OpenStreetMap</a>' });
+      var map = LMap.map('pollingMap', {
+          // buildingId: "BJ0114VANK",
+          // buildingId: "ZJ01063L8LNd",
+          // buildingId: "BJ01131ACRkX",
+          // buildingId: "CN110105K9A",
+          buildingId: buildingIdAppId,
+          //此处缩放级别无用，初始缩放级别在lmap-src.js中设定
+          zoom: 20,
+          minZoom:18,
+          floor: 1,
+          keyboard: false,
+          Token: token,
+      })
+      //实例地图
+      // function Page() { }
+      // $.extend(Page.prototype, {
+      //     init: function () {
+      //         //加载所有事件
+      //         this.events();
+      //     },
+      //     events: function () {
+      //         //存储时间戳
+      //         this.setDate();
+      //         this.setMinutesSeconds();
+      //         //配置微信
+      //         this.getWxConfig();
+      //     },
+      //     data: {
+      //         date: null,
+      //         leng: 0
+      //     },
+      //     //设置时间戳
+      //     setDate: function () {
+      //         this.data.date = this.getDate();
+      //     },
+      //     setMinutesSeconds() {
+      //         var date = new Date();
+      //         this.minutesSeconds = date.getDate() +
+      //             " " +
+      //             date.getHours() +
+      //             ":" +
+      //             date.getMinutes() +
+      //             ":" +
+      //             date.getSeconds();
+      //     },
+      //     //得到时间戳
+      //     getDate: function () {
+      //         var date = new Date();
+      //         return (
+      //             date.getFullYear() +
+      //             "-" +
+      //             (date.getMonth() + 1) +
+      //             "-" +
+      //             date.getDate() +
+      //             " " +
+      //             date.getHours() +
+      //             ":" +
+      //             date.getMinutes() +
+      //             ":" +
+      //             date.getSeconds()
+      //         );
+      //     },
+      //
+      //     //配置微信.config xy
+      //     getWxConfig: function () {
+      //         var _this = this;
+      //         $.ajax({
+      //             type: "post",
+      //             headers: {
+      //                 Token: token
+      //             },
+      //             url: basePath + "/servermApi/getWxConfig",
+      //             data: {
+      //                 baseUrl: window.location.href
+      //             },
+      //             success: res => {
+      //                 var ticket = res.ticket;
+      //                 wx.config({
+      //                     debug: false,
+      //                     appId: res.appId,
+      //                     timestamp: res.timestamp,
+      //                     nonceStr: res.nonceStr,
+      //                     signature: res.signature,
+      //                     jsApiList: [
+      //                         "checkJsApi",
+      //                         "getNetworkType",
+      //                         "startSearchBeacons",
+      //                         "stopSearchBeacons",
+      //                         "onSearchBeacons",
+      //                         "onMenuShareAppMessage",
+      //                         'scanQRCode',
+      //                     ]
+      //                 });
+      //                 wx.ready(() => {
+      //                     //成功之后开始搜索Beacons
+      //                   //   _this.startSearch(JSON.stringify(ticket));
+      //                 });
+      //             }
+      //         });
+      //     }
+      //     ,
+      //     //配置成功搜索信号 xy
+      //     startSearch: function (ticket) {
+      //
+      //         var _this = this;
+      //         wx.startSearchBeacons({
+      //             ticket: ticket,
+      //             complete: argv => {
+      //                 if (
+      //                     argv.errMsg == "startSearchBeacons:ok" ||
+      //                     argv.errMsg == "startSearchBeacons:already started"
+      //                 ) {
+      //                     wx.onSearchBeacons({
+      //                         complete: function (arg) {
+      //                             //发送beacon以及相应信息 获得位置
+      //                             _this.checkBeacon(arg.beacons);
+      //                         }
+      //                     });
+      //                 } else if (argv.errMsg == "startSearchBeacons:bluetooth power off") {
+      //                     wx.stopSearchBeacons();
+      //                     swal("请您开启蓝牙服务")
+      //                 } else if (
+      //                     argv.errMsg == "startSearchBeacons:location service disable"
+      //                 ) {
+      //                     wx.stopSearchBeacons();
+      //                     swal("请您开启定位服务")
+      //                 } else if (argv.errMsg == "startSearchBeacons:system unsupported") {
+      //                     wx.stopSearchBeacons();
+      //                     swal("您的系统暂不支持")
+      //                 } else {
+      //                     alert("error is " + argv.errMsg);
+      //                     swal("未知错误" + argv.errMsg + "@@@@@@@" + ticket)
+      //                 }
+      //             }
+      //         });
+      //     },
+      //     // 得到信息 过滤 筛选  定位 xy
+      //     checkBeacon: function (beaconsArray) {
+      //         if (!searchBeaconFlag) {
+      //             return;
+      //         }
+      //         var _this = this;
+      //         if (checkBeaconFlag) {
+      //             var externalNumber = document.getElementById("external").value;
+      //             if (externalNumber == undefined || externalNumber == null || externalNumber == '') {
+      //                 externalNumber = afterInstallExternalNumber;
+      //             }
+      //             if(externalNumber == '' || externalNumber == null || externalNumber == undefined || externalNumber == ' '){
+      //               alertsAll('外壳编号不能为空')
+      //               checkBeaconFlag = false;
+      //             }
+      //             var beaconNeedToCheck = getBeacon(externalNumber);
+      //         }
+      //
+      //         //筛选有用信息
+      //         beaconList = [];//清空数组
+      //         $('.MajorMinorDiv').html('');
+      //
+      //         for (let i = 0; i < beaconsArray.length; i++) {
+      //             beaconsArray[i].rssi = parseInt(beaconsArray[i].rssi);
+      //             let obj = {};
+      //             if (beaconsArray[i].rssi != 0) {
+      //                 obj = {
+      //                     uuid: beaconsArray[i].uuid,
+      //                     major: beaconsArray[i].major,
+      //                     minor: beaconsArray[i].minor,
+      //                     rssi: beaconsArray[i].rssi
+      //                 };
+      //                 beaconList.push(obj);
+      //                 if (checkBeaconFlag && (noDeviceFlag || noSignalFlag)) {
+      //                     if (beaconNeedToCheck != undefined && beaconNeedToCheck != null) {
+      //                         if (beaconNeedToCheck.beaconUuid == beaconsArray[i].uuid &&
+      //                             beaconNeedToCheck.beaconMajor == beaconsArray[i].major &&
+      //                             beaconNeedToCheck.beaconMinor == beaconsArray[i].minor) {
+      //                             noDeviceFlag = false;
+      //                             noSignalFlag = false;
+      //                         } else {
+      //                             noSignalFlag = true;
+      //                             noDeviceFlag = false;
+      //                         }
+      //                     } else {
+      //                         noDeviceFlag = true;
+      //                     }
+      //                 }
+      //             }
+      //         }
+      //         if (checkBeaconFlag) {
+      //             if (!noDeviceFlag && !noSignalFlag) {
+      //                 alertsAll("设备正常")
+      //                 alert('设备正常');
+      //                 $('#showBeaconStatus').html('设备正常')
+      //                 checkBeaconFlag = false;
+      //                 noDeviceCounter = 0;
+      //                 noSignalCounter = 0;
+      //                 noDeviceFlag = true;
+      //                 noSignalFlag = true;
+      //                 if (afterInstallFlag) {
+      //                     searchBeaconFlag = false;
+      //                     afterInstallFlag = false;
+      //                 }
+      //             } else if (noDeviceCounter == 60) {
+      //                 alert('未搜索到此设备信号');
+      //                 $('#showBeaconStatus').html('未搜索到此设备信号')
+      //                 checkBeaconFlag = false;
+      //                 noDeviceCounter = 0;
+      //                 noSignalCounter = 0;
+      //                 noDeviceFlag = true;
+      //                 noSignalFlag = true;
+      //                 if (afterInstallFlag) {
+      //                     searchBeaconFlag = false;
+      //                     afterInstallFlag = false;
+      //                 }
+      //             } else if (noSignalCounter == 60) {
+      //                 alert('数据库存在此设备，但未搜索到此设备信号');
+      //                 $('#showBeaconStatus').html('数据库存在此设备，但未搜索到此设备信号')
+      //                 checkBeaconFlag = false;
+      //                 noDeviceCounter = 0;
+      //                 noSignalCounter = 0;
+      //                 noDeviceFlag = true;
+      //                 noSignalFlag = true;
+      //                 if (afterInstallFlag) {
+      //                     searchBeaconFlag = false;
+      //                     afterInstallFlag = false;
+      //                 }
+      //             } else if (noDeviceFlag) {
+      //                 $('#showBeaconStatus').html('正在搜索中，请稍候')
+      //                 noDeviceCounter++;
+      //                 // $('#showBeaconStatus').html("noDeviceCounter " + noDeviceCounter)
+      //                 alertsAll('暂未搜索到此Beacon，正在进行第' + noDeviceCounter + '次重试');
+      //             } else if (noSignalFlag) {
+      //                 $('#showBeaconStatus').html('正在搜索中，请稍候')
+      //                 noSignalCounter++;
+      //                 // $('#showBeaconStatus').html("noSignalCounter " + noSignalCounter)
+      //                 alertsAll('暂未搜索到此Beacon信号，正在进行第' + noSignalCounter + '次重试');
+      //             }
+      //         }
+      //
+      //
+      //         for (var i = 0; i < beaconList.length; i++) {
+      //             $('.MajorMinorDiv').append('<div class="MajorMinorDivList">' +
+      //                 '<div class="">' + beaconList[i].uuid + '</div>' +
+      //                 '<div class="">' +
+      //                 '<span>Major:</span>' +
+      //                 '<span>' + beaconList[i].major + '</span>' +
+      //                 '<span>Minor:</span>' +
+      //                 '<span>' + beaconList[i].minor + '</span>' +
+      //                 '</div>' +
+      //                 '<span>rssi:</span>' +
+      //                 '<span class="">' + beaconList[i].rssi + '</span>' +
+      //                 '</div>')
+      //         }
+      //     },
+      //
+      //
+      // })
+      //
+      // var page = new Page();
+      // page.init();
+
+      map.once('mapready', function () {
+          // 假如楼层过长就加固定长度加一个滑动条
+          if ($('.control-floor-warp').height() >= 150) {
+              $('.control-floor-warp').css('height', '150px');
+              $('.control-floor-warp').css('overflow', 'auto')
+          }
+          baseStation(map.getFloor())
+          // 以下三个点击事件是判断点击楼层控件
+          $('.control-floor-minus').click(function(){
+            baseStation(map.getFloor())
+          })
+          $('.control-floor-plus').click(function(){
+            baseStation(map.getFloor())
+          })
+          $('.control-floor-item').each(function(){
+            $(this).click(function(){
+              var fl = $(this).html().substring(0,1);
+              var num = $(this).html().substring(1,10);
+              var floorTest;
+              if(fl == 'F'){
+                floorTest = num;
+              }else{
+                floorTest = -num;
+              }
+              baseStation(floorTest)
+            })
+          })
+      })
+      // 获取路径链接
+      function getQueryString(name) {
+          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+          var r = window.location.search.substr(1).match(reg);
+          if (r != null) {
+              return decodeURIComponent(r[2]);
+          }
+          return null;
+      }
+      //辅助修复拖动时消失BUG
+      function moveEndHelper() {
+        setTimeout(() => {
+            map._resetView(map.getCenter(), map.getZoom());
+        }, 100);
+      }
+    </script>
+</body>
+</html>

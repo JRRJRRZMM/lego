@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="translated-ltr" style="height:100%">
+  <head>
+      <meta charset="utf-8">
+      <meta name="renderer" content="webkit" />
+      <meta name="force-rendering" content="webkit" />
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+      />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <!-- 以下为禁止微信X5浏览器使用缓存 -->
+      <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+      <meta http-equiv="Pragma" content="no-cache" />
+      <meta http-equiv="Expires" content="0" />
+      <!--[if lt IE 9]>
+          <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+          <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+      <!-- 以上为禁止微信X5浏览器使用缓存 -->
+      <title>室内地图</title>
+      <link rel="shortcut icon" href="../css/images/bitbug_favicon.ico" type="image/x-icon" />
+      <link rel="stylesheet" href="../css/bootstrap.min.css" />
+      <link rel="stylesheet" href="../css/login.css" />
+      <link rel="stylesheet" href="../css/baseStation.css" />
+      <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
+      <!-- <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  </head>
+
+  <body style="height:100%">
+    <div class="contentLogin">
+      <label for=""class="loginLable">
+        <div class="logindiv">
+          欢迎登录
+        </div>
+        <input type="text" id="userLogin" placeholder="请输入用户名" class="form-control" style="">
+        <input type="password" id="passwordLogin" placeholder="请输入密码" class="form-control" style="margin-top: 10px;">
+        <button type="button" id="btnLogin" name="button" class="btn btn-primary" style="width:100%">登录</button>
+      </label>
+    </div>
+
+    <div class="alertsAll">
+        成功
+    </div>
+  </body>
+  <script src="../js/lmap-src.js"></script>
+  <script src="../js/jquery-3.1.1.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script>
+  var userPhones = getQueryString("userPhones");
+  console.log(userPhones);
+    $('#btnLogin').click(function(){
+      var userLogin = $('#userLogin').val();
+      var passwordLogin = $('#passwordLogin').val();
+      if(userLogin == ''){
+        alertsAll('用户名不能为空');
+        return;
+      }
+      if(passwordLogin == ''){
+        alertsAll('密码不能为空');
+        return;
+      }
+      var datas = {
+        "username":userLogin,
+        "password":passwordLogin
+      }
+      $.ajax({
+          url: basePath + "/loginapp/loginApp",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(datas),
+          //同步
+          async: false,
+          success: function (res) {
+              if (res.code == '10000') {
+                if(res.data == "false"){
+                  alertsAll('用户不存在或密码错误');
+                }else {
+                  for (var i = 0; i < res.data.length; i++) {
+                    if(res.data[i].checked == "true"){
+                      window.location.href = '../index.html?buildingId='+res.data[i].buildingId+'&userPhones='+userPhones; //后台主页
+                      return;
+                    }
+                  }
+                }
+              }else {
+                console.log('用户不存在');
+                alertsAll('用户不存在')
+              }
+          }
+      });
+    })
+    function alertsAll(res) {
+        $('.alertsAll').html(res);
+        $('.alertsAll').css('display', 'block')
+        setTimeout(function () {
+            $('.alertsAll').css('display', 'none')
+        }, 3000)
+    }
+    // 获取路径链接
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURIComponent(r[2]);
+        }
+        return null;
+    }
+  </script>
+</html>

@@ -1,0 +1,62 @@
+.message_push{
+  background: #53aaea;
+  overflow: hidden;
+  width:200px;
+  height:200px;
+  text-align:center;
+  border-radius: 10px;
+  float: left;
+  position: absolute;
+}
+.message_push_floor{
+  overflow: hidden;
+  width:200px;
+  height:200px;
+  text-align:center;
+  border-radius: 10px;
+  /* margin-left: 230px; */
+  background: #00b8a5;
+  position: absolute;
+}
+.sign_area{
+  overflow: hidden;
+  width:200px;
+  height:200px;
+  text-align:center;
+  border-radius: 10px;
+  /* margin-left: 460px; */
+  /* margin-top: -200px; */
+  background: #ff716f;
+  position: absolute;
+}
+.authority{
+  position: absolute;
+  top: -80px;
+  left: 60px;
+  height: 50px;
+}
+.authorityCss{
+  position:relative;
+  float: left;
+}
+.authorityCssDiv{
+  margin-top: 32px;
+  padding: 10px;
+  color: #fff;
+  font-size: 20px;
+}
+.click_jurisdiction{
+  border-radius: 10px;
+  font-size: 20px;
+  display: none;
+  position:absolute;
+  width:200px;
+  height:200px;
+  background:#080808b8;
+  color:#fff;
+  text-align: center;
+  line-height: 70px;
+}
+.applyFor{
+  cursor:pointer
+}
